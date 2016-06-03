@@ -15,21 +15,21 @@ static NSString *const PLUGIN_NAME = @"IonicDeeplink";
 
 @implementation AppDelegate (IonicDeeplink)
 
-- (BOOL)application:(UIApplication *)application
-continueUserActivity:(NSUserActivity *)userActivity
- restorationHandler:(void (^)(NSArray * _Nullable))restorationHandler {
-    // ignore activities that are not for Universal Links
-    if (![userActivity.activityType isEqualToString:NSUserActivityTypeBrowsingWeb] || userActivity.webpageURL == nil) {
-        return NO;
-    }
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    return YES;
+}
 
-    // get instance of the plugin and let it handle the userActivity object
-    CULPlugin *plugin = [self.viewController getCommandInstance:PLUGIN_NAME];
-    if (plugin == nil) {
-        return NO;
-    }
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    return YES;
+}
 
-    return [plugin handleUserActivity:userActivity];
+- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
+  // Pass it off to our plugin
+    return result;
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+  // Pass the push notification to the plugin
 }
 
 @end
