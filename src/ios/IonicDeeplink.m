@@ -20,7 +20,7 @@
 }
 
 - (BOOL)handleLink:(NSURL *)url {
-  NSLog(@"Handling LINK %s", [url absoluteString]);
+  NSLog(@"Handling LINK %@", [url absoluteString]);
   return NO;
 }
 

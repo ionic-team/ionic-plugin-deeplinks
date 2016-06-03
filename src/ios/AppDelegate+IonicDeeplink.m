@@ -1,25 +1,42 @@
 
 //
-//  AppDelegate+CULPlugin.m
+//  AppDelegate+IonicDeeplink.m
 //
-//  Created by Nikolay Demyankov on 15.09.15.
 //
 
-#import "AppDelegate+IonicDeeplink.h"
+
+#import "AppDelegate.h"
 #import "IonicDeeplink.h"
+#import "IonicDeeplinkPlugin.h"
 
 /**
- *  Plugin name in config.xml
+ *  Category for the AppDelegate that overrides application:continueUserActivity:restorationHandler method,
+ *  so we could handle application launch when user clicks on the link in the browser.
  */
-static NSString *const PLUGIN_NAME = @"IonicDeeplink";
+@interface AppDelegate (IonicDeeplinkPlugin)
 
-@implementation AppDelegate (IonicDeeplink)
+- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation;
+- (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray * _Nullable))restorationHandler;
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo;
+- (void)applicationDidBecomeActive:(UIApplication *)application;
+
+@end
+
+@implementation AppDelegate (IonicDeeplinkPlugin)
+
+-(void)applicationDidBecomeActive:(UIApplication *)application {
+  NSLog(@"DEEP LINK: APP DID BECOME ACTIVE");
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    return YES;
+  NSURL *launchURL = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
+  NSLog(@"DID FINISH LUNCHING WITH OPTIONS %@", [launchURL absoluteString]);
+  return YES;
 }
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+    NSLog(@"OPEN URL CALLED %@", [url absoluteString]);
 
     BOOL handled = [[IonicDeeplink instance] handleLink:url];
 
