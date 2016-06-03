@@ -6,6 +6,7 @@
 + (IonicDeeplink*)instance;
 + (IonicDeeplink*)_instance;
 
-- (void)testMethod;
+- (BOOL)handleLink:(NSURL *)url;
+- (BOOL)handleContinueUserActivity:(NSUserActivity *)userActivity;
 
 @end

@@ -12,7 +12,6 @@
   NSLog(@"Ionic Deeplinks...deployyyy!");
 
   IonicDeeplink *dl = [IonicDeeplink instance];
-  [dl testMethod];
 }
 
 

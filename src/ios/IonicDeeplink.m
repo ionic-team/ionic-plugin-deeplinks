@@ -19,10 +19,14 @@
   return sharedInstance;
 }
 
-- (void)testMethod {
-  NSLog(@"Instance test method");
+- (BOOL)handleLink:(NSURL *)url {
+  NSLog(@"Handling LINK %s", [url absoluteString]);
+  return NO;
 }
 
+- (BOOL)handleContinueUserActivity:(NSUserActivity *)userActivity {
 
+  return NO;
+}
 
 @end
