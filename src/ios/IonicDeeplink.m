@@ -1,12 +1,13 @@
 #import "IonicDeeplink.h"
 #import <Cordova/CDVAvailability.h>
 
-@implementation IonicKeyboard
+@implementation IonicDeeplink
 
 - (void)pluginInitialize {
 
   NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-  
+
+  NSLog(@"Ionic Deeplinks...deploy!");
 }
 
 
