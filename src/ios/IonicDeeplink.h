@@ -1,6 +1,11 @@
 #import <Cordova/CDVPlugin.h>
 
-@interface IonicDeeplink : CDVPlugin {
-}
+@interface IonicDeeplink : NSObject
+
+// Singleton for our deeplink service
++ (IonicDeeplink*)instance;
++ (IonicDeeplink*)_instance;
+
+- (void)testMethod;
 
 @end

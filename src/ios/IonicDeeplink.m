@@ -3,17 +3,26 @@
 
 @implementation IonicDeeplink
 
-- (void)pluginInitialize {
-
-  NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-
-  NSLog(@"Ionic Deeplinks...deploy!");
++ (IonicDeeplink*)instance {
+  return [IonicDeeplink _instance];
 }
 
 
-/* ------------------------------------------------------------- */
++ (IonicDeeplink*)_instance {
+  static IonicDeeplink *sharedInstance = nil;
 
-- (void)dealloc {
+  static dispatch_once_t onceToken;
+  dispatch_once(&onceToken, ^{
+    sharedInstance = [[IonicDeeplink alloc] init];
+    // Do any other initialisation stuff here
+  });
+  return sharedInstance;
 }
+
+- (void)testMethod {
+  NSLog(@"Instance test method");
+}
+
+
 
 @end

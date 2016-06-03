@@ -35,10 +35,14 @@
         </js-module>
         <config-file target="config.xml" parent="/*">
             <feature name="Deeplink">
-                <param name="ios-package" value="IonicDeeplink" onload="true" />
+                <param name="ios-package" value="IonicDeeplinkPlugin" onload="true" />
             </feature>
         </config-file>
 
+        <header-file src="src/ios/AppDelegate+IonicDeeplink.h" />
+        <header-file src="src/ios/AppDelegate+IonicDeeplink.m" />
+        <header-file src="src/ios/IonicDeeplinkPlugin.h" />
+        <source-file src="src/ios/IonicDeeplinkPlugin.m" />
         <header-file src="src/ios/IonicDeeplink.h" />
         <source-file src="src/ios/IonicDeeplink.m" />
     </platform>
