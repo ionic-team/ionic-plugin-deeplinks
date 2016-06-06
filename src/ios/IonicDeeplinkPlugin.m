@@ -5,26 +5,19 @@
 @implementation IonicDeeplinkPlugin
 
 - (void)pluginInitialize {
-
-  NSNotificationCenter* nc = [NSNotificationCenter defaultCenter];
-
-  NSLog(@"Ionic Deeplinks...deployyyy!");
-
   _handlers = [[NSMutableArray alloc] init];
-
-  //IonicDeeplink *dl = [IonicDeeplink instance];
 }
 
 
 /* ------------------------------------------------------------- */
 
-- (void)dealloc {
+- (void)onAppTerminate {
+  _handlers = nil;
+  [super onAppTerminate];
 }
 
 - (void)onDeepLink:(CDVInvokedUrlCommand *)command {
   [_handlers addObject:command.callbackId];
-
-  NSLog(@"IonicDeeplink: Registering onURL handler from JS %@", command.callbackId);
 }
 
 - (BOOL)handleLink:(NSURL *)url {
@@ -32,9 +25,7 @@
 
   _lastEvent = [self createResult:url];
 
-  for (id callbackID in _handlers) {
-    [self.commandDelegate sendPluginResult:_lastEvent callbackId:callbackID];
-  }
+  [self sendToJs];
 
   return YES;
 }
@@ -49,20 +40,33 @@
   NSURL *url = userActivity.webpageURL;
   _lastEvent = [self createResult:url];
 
-  NSLog(@"Stored the last event");
-
   [self sendToJs];
 
   return NO;
 }
 
 - (void) sendToJs {
-  NSLog(@"Sending event to JS engine...");
+  // Send the last event to JS if we have one
+  if (_lastEvent == nil) {
+    return;
+  }
+
+  // Iterate our handlers and send the event
+  for (id callbackID in _handlers) {
+    [self.commandDelegate sendPluginResult:_lastEvent callbackId:callbackID];
+  }
+
+  // Clear out the last event
+  _lastEvent = nil;
 }
 
 - (CDVPluginResult *)createResult:(NSURL *)url {
   NSDictionary* data = @{
-    @"url": [url absoluteString],
+    @"url": [url absoluteString] ?: @"",
+    @"path": [url path] ?: @"",
+    @"queryString": [url query] ?: @"",
+    @"scheme": [url scheme] ?: @"",
+    @"host": [url host] ?: @""
   };
 
   CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:data];
