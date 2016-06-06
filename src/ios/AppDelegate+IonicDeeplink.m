@@ -29,11 +29,13 @@
   NSLog(@"DEEP LINK: APP DID BECOME ACTIVE");
 }
 
+/*
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
   NSURL *launchURL = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
   NSLog(@"DID FINISH LUNCHING WITH OPTIONS %@", [launchURL absoluteString]);
-  return YES;
+  return NO;
 }
+*/
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     NSLog(@"OPEN URL CALLED %@", [url absoluteString]);
@@ -44,7 +46,7 @@
       // Continue sending the openURL request through
     }
 
-    return YES;
+    //return YES;
 }
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
@@ -54,7 +56,7 @@
     if(!handled) {
         // Continue sending the openURL request through
     }
-    return YES;
+    //return YES;
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
