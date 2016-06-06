@@ -3,8 +3,15 @@ var argscheck = require('cordova/argscheck'),
     utils = require('cordova/utils'),
     exec = require('cordova/exec');
 
+var PLUGIN_NAME = 'IonicDeeplinkPlugin';
 
-var Deeplink = function() {
+var IonicDeeplink = {
+  onDeepLink: function(callback) {
+    var innerCB = function(data) {
+      callback(data);
+    };
+    exec(innerCB, null, PLUGIN_NAME, 'onDeepLink', []);
+  }
 };
 
-module.exports = Deeplink;
+module.exports = IonicDeeplink;

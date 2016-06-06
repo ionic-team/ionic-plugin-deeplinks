@@ -6,8 +6,9 @@
 
 
 #import "AppDelegate.h"
-#import "IonicDeeplink.h"
 #import "IonicDeeplinkPlugin.h"
+
+static NSString *const PLUGIN_NAME = @"IonicDeeplinkPlugin";
 
 /**
  *  Category for the AppDelegate that overrides application:continueUserActivity:restorationHandler method,
@@ -15,48 +16,52 @@
  */
 @interface AppDelegate (IonicDeeplinkPlugin)
 
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions;
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation;
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray * _Nullable))restorationHandler;
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo;
-- (void)applicationDidBecomeActive:(UIApplication *)application;
+//- (void)applicationDidBecomeActive:(UIApplication *)application;
 
 @end
 
 @implementation AppDelegate (IonicDeeplinkPlugin)
 
--(void)applicationDidBecomeActive:(UIApplication *)application {
-  NSLog(@"DEEP LINK: APP DID BECOME ACTIVE");
-}
-
-/*
-- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-  NSURL *launchURL = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
-  NSLog(@"DID FINISH LUNCHING WITH OPTIONS %@", [launchURL absoluteString]);
-  return NO;
-}
-*/
-
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     NSLog(@"OPEN URL CALLED %@", [url absoluteString]);
 
-    BOOL handled = [[IonicDeeplink instance] handleLink:url];
+    IonicDeeplinkPlugin *plugin = [self.viewController getCommandInstance:PLUGIN_NAME];
 
-    if(!handled) {
-      // Continue sending the openURL request through
+    if(plugin == nil) {
+      NSLog(@"Unable to get instance of commadn plugin");
+      return NO;
     }
 
-    //return YES;
+    BOOL handled = [plugin handleLink:url];
+
+    if(!handled) {
+      // Pass event through to Cordova
+      [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:CDVPluginHandleOpenURLNotification object:url]];
+
+      // Send notice to the rest of our plugin that we didn't handle this URL
+      [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"IonicLinksUnhandledURL" object:[url absoluteString]]];
+    }
+
+    return YES;
 }
 
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray *restorableObjects))restorationHandler {
     // Pass it off to our plugin
-    BOOL handled = [[IonicDeeplink instance] handleContinueUserActivity:userActivity];
+    IonicDeeplinkPlugin *plugin = [self.viewController getCommandInstance:PLUGIN_NAME];
+
+    if(plugin == nil) {
+      return NO;
+    }
+
+    BOOL handled = [plugin handleContinueUserActivity:userActivity];
 
     if(!handled) {
         // Continue sending the openURL request through
     }
-    //return YES;
+    return YES;
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {

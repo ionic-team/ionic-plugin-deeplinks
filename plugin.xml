@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     id="ionic-plugin-deeplink"
     version="1.0.8">
-    <name>Deeplink</name>
+    <name>Ionic Deeplink Plugin</name>
     <description>Ionic Deeplink Plugin</description>
     <license>MIT</license>
     <keywords>Ionic,deeplinks,deeplinking</keywords>
@@ -35,7 +35,7 @@
             <clobbers target="IonicDeeplink" />
         </js-module>
         <config-file target="config.xml" parent="/*">
-            <feature name="Deeplink">
+            <feature name="IonicDeeplinkPlugin">
                 <param name="ios-package" value="IonicDeeplinkPlugin" onload="true" />
             </feature>
         </config-file>
@@ -43,8 +43,6 @@
         <config-file target="*-Info.plist" parent="CFBundleURLTypes">
           <array>
             <dict>
-              <key>CFBundleURLName</key>
-              <string>io.ionic.deeplink</string>
               <key>CFBundleURLSchemes</key>
               <array>
                 <string>$URL_SCHEME</string>
@@ -53,11 +51,8 @@
           </array>
         </config-file>
 
-        <!--<header-file src="src/ios/AppDelegate+IonicDeeplink.h" />-->
         <source-file src="src/ios/AppDelegate+IonicDeeplink.m" />
         <header-file src="src/ios/IonicDeeplinkPlugin.h" />
         <source-file src="src/ios/IonicDeeplinkPlugin.m" />
-        <header-file src="src/ios/IonicDeeplink.h" />
-        <source-file src="src/ios/IonicDeeplink.m" />
     </platform>
 </plugin>
