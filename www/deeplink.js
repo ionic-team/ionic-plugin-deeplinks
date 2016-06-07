@@ -6,6 +6,9 @@ var argscheck = require('cordova/argscheck'),
 var PLUGIN_NAME = 'IonicDeeplinkPlugin';
 
 var IonicDeeplink = {
+  canOpenApp: function(app, cb) {
+    exec(cb, null, PLUGIN_NAME, 'canOpenApp', []);
+  },
   init: function(navController, paths) {
     var self = this;
 

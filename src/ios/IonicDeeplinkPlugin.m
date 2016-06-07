@@ -16,6 +16,20 @@
   [super onAppTerminate];
 }
 
+- (void)canOpenApp:(CDVInvokedUrlCommand *)command {
+  CDVPluginResult* result = nil;
+
+  NSString* scheme = [command.arguments objectAtIndex:0];
+
+  if ([[UIApplication sharedApplication] canOpenURL:[NSURL URLWithString:scheme]]) {
+    result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsBool:(true)];
+  } else {
+    result = [CDVPluginResult resultWithStatus:CDVCommandStatus_ERROR messageAsBool:(false)];
+  }
+
+  [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+}
+
 - (void)onDeepLink:(CDVInvokedUrlCommand *)command {
   [_handlers addObject:command.callbackId];
 }

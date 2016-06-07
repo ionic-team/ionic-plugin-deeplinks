@@ -29,6 +29,7 @@ import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.inputmethod.InputMethodManager;
 import android.net.Uri;
+import android.content.pm.PackageManager;
 
 import java.util.ArrayList;
 
@@ -91,11 +92,32 @@ public class IonicDeeplink extends CordovaPlugin {
     if(action.equals("onDeepLink")) {
       Log.d(TAG, "Adding handler");
       addHandler(args, callbackContext);
+    } else if(action.equals("canOpenApp")) {
+      Log.d(TAG, "Checking if can open");
+      String uri = args.getString(0);
+      canOpenApp(uri, callbackContext);
     }
     return true;
   }
 
   private void addHandler(JSONArray args, final CallbackContext callbackContext) {
     this._handlers.add(callbackContext);
+  }
+
+  /**
+   * Check if we can open an app with a given URI scheme.
+   *
+   * Thanks to https://github.com/ohh2ahh/AppAvailability/blob/master/src/android/AppAvailability.java
+   */
+  private void canOpenApp(String uri, final CallbackContext callbackContext) {
+    Context ctx = this.cordova.getActivity().getApplicationContext();
+    final PackageManager pm = ctx.getPackageManager();
+
+    try {
+      pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
+      callbackContext.success();
+    } catch(PackageManager.NameNotFoundException e) {}
+
+    callbackContext.error("");
   }
 }

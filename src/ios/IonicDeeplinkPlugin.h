@@ -7,6 +7,7 @@
 }
 
 // User-plugin command handler
+- (void)canOpenApp:(CDVInvokedUrlCommand *)command;
 - (void)onDeepLink:(CDVInvokedUrlCommand *)command;
 
 // Internal deeplink and CUA handlers
