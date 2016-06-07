@@ -1,3 +1,13 @@
+/**
+ * Ionic Deeplinks Plugin.
+ * License: MIT
+ *
+ * Thanks to Eddy Verbruggen and nordnet for the great custom URl scheme and
+ * unviversal links plugins this plugin was inspired by.
+ *
+ * https://github.com/EddyVerbruggen/Custom-URL-scheme
+ * https://github.com/nordnet/cordova-universal-links-plugin
+ */
 package io.ionic.links;
 
 import org.apache.cordova.CallbackContext;
@@ -6,19 +16,28 @@ import org.apache.cordova.CordovaPlugin;
 import org.apache.cordova.CordovaWebView;
 import org.apache.cordova.PluginResult;
 import org.apache.cordova.PluginResult.Status;
+import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 
 import android.util.Log;
+import android.content.Intent;
 import android.content.Context;
 import android.graphics.Rect;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.inputmethod.InputMethodManager;
+import android.net.Uri;
+
+import java.util.ArrayList;
 
 public class IonicDeeplink extends CordovaPlugin {
   private static final String TAG = "IonicDeeplinkPlugin";
+
+  private JSONObject lastEvent;
+
+  private ArrayList<CallbackContext> _handlers = new ArrayList<CallbackContext>();
 
   public void initialize(CordovaInterface cordova, CordovaWebView webView) {
     super.initialize(cordova, webView);
@@ -26,7 +45,55 @@ public class IonicDeeplink extends CordovaPlugin {
     Log.d(TAG, "Initializing Deeplinks Plugin");
   }
 
+  @Override
+  public void onNewIntent(Intent intent) {
+    final String intentString = intent.getDataString();
+
+    Log.d(TAG, "Got a new intent: " + intentString + " " + intent.getScheme());
+
+    // read intent
+    String action = intent.getAction();
+    Uri url = intent.getData();
+
+    // if app was not launched by the url - ignore
+    if (!Intent.ACTION_VIEW.equals(action) || url == null) {
+      return;
+    }
+
+    // store message and try to consume it
+    try {
+      lastEvent = new JSONObject();
+      lastEvent.put("url", url.toString());
+      lastEvent.put("path", url.getPath());
+      lastEvent.put("queryString", url.getQuery());
+      lastEvent.put("scheme", url.getScheme());
+      lastEvent.put("host", url.getHost());
+    } catch(JSONException ex) {
+    }
+  }
+
+  private void consumeEvents() {
+    for(CallbackContext callback : this._handlers) {
+      sendToJs(lastEvent, callback);
+    }
+    lastEvent = null;
+  }
+
+  private void sendToJs(JSONObject event, CallbackContext callback) {
+    final PluginResult result = new PluginResult(PluginResult.Status.OK, event);
+    result.setKeepCallback(true);
+    callback.sendPluginResult(result);
+  }
+
   public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
+    if(action.equals("onDeepLink")) {
+      Log.d(TAG, "Adding handler");
+      addHandler(args, callbackContext);
+    }
     return true;
+  }
+
+  private void addHandler(JSONArray args, final CallbackContext callbackContext) {
+    this._handlers.add(callbackContext);
   }
 }
