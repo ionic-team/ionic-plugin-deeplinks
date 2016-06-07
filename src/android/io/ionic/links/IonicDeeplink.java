@@ -49,11 +49,11 @@ public class IonicDeeplink extends CordovaPlugin {
   public void onNewIntent(Intent intent) {
     final String intentString = intent.getDataString();
 
-    Log.d(TAG, "Got a new intent: " + intentString + " " + intent.getScheme());
 
     // read intent
     String action = intent.getAction();
     Uri url = intent.getData();
+    Log.d(TAG, "Got a new intent: " + intentString + " " + intent.getScheme() + " " + action + " " + url);
 
     // if app was not launched by the url - ignore
     if (!Intent.ACTION_VIEW.equals(action) || url == null) {
@@ -68,7 +68,9 @@ public class IonicDeeplink extends CordovaPlugin {
       lastEvent.put("queryString", url.getQuery());
       lastEvent.put("scheme", url.getScheme());
       lastEvent.put("host", url.getHost());
+      consumeEvents();
     } catch(JSONException ex) {
+      Log.e(TAG, "Unable to process URL scheme deeplink", ex);
     }
   }
 

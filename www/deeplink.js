@@ -31,10 +31,13 @@ var IonicDeeplink = {
   },
 
   _queryToObject: function(q) {
+    if(!q) return {};
+
     var i = 0, retObj = {}, pair = null,
       qArr = q.split('&');
 
     for (; i < qArr.length; i++) {
+      if(!qArr[i]) { continue; }
       pair = qArr[i].split('=');
       retObj[pair[0]] = pair[1];
     };
