@@ -30,8 +30,10 @@ import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.inputmethod.InputMethodManager;
 import android.net.Uri;
 import android.content.pm.PackageManager;
+import android.os.Bundle;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 public class IonicDeeplink extends CordovaPlugin {
   private static final String TAG = "IonicDeeplinkPlugin";
@@ -53,6 +55,7 @@ public class IonicDeeplink extends CordovaPlugin {
     // read intent
     String action = intent.getAction();
     Uri url = intent.getData();
+    JSONObject bundleData = this._bundleToJson(intent.getExtras());
     //Log.d(TAG, "Got a new intent: " + intentString + " " + intent.getScheme() + " " + action + " " + url);
 
     // if app was not launched by the url - ignore
@@ -68,10 +71,22 @@ public class IonicDeeplink extends CordovaPlugin {
       lastEvent.put("queryString", url.getQuery());
       lastEvent.put("scheme", url.getScheme());
       lastEvent.put("host", url.getHost());
+      lastEvent.put("extra", bundleData);
       consumeEvents();
     } catch(JSONException ex) {
       Log.e(TAG, "Unable to process URL scheme deeplink", ex);
     }
+  }
+
+  public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
+    if(action.equals("onDeepLink")) {
+      addHandler(args, callbackContext);
+    } else if(action.equals("canOpenApp")) {
+      Log.d(TAG, "Checking if can open");
+      String uri = args.getString(0);
+      canOpenApp(uri, callbackContext);
+    }
+    return true;
   }
 
   private void consumeEvents() {
@@ -87,19 +102,24 @@ public class IonicDeeplink extends CordovaPlugin {
     callback.sendPluginResult(result);
   }
 
-  public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
-    if(action.equals("onDeepLink")) {
-      addHandler(args, callbackContext);
-    } else if(action.equals("canOpenApp")) {
-      Log.d(TAG, "Checking if can open");
-      String uri = args.getString(0);
-      canOpenApp(uri, callbackContext);
-    }
-    return true;
-  }
-
   private void addHandler(JSONArray args, final CallbackContext callbackContext) {
     this._handlers.add(callbackContext);
+  }
+
+  private JSONObject _bundleToJson(Bundle bundle) {
+    if(bundle == null) {
+      return new JSONObject();
+    }
+    
+    JSONObject j = new JSONObject();
+    Set<String> keys = bundle.keySet();
+    for(String key : keys) {
+      try {
+        j.put(key, JSONObject.wrap(bundle.get(key)));
+      } catch(JSONException ex) {}
+    }
+
+    return j;
   }
 
   /**
