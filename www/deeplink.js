@@ -24,14 +24,13 @@ var IonicDeeplink = {
   canOpenApp: function(app, cb) {
     exec(cb, null, PLUGIN_NAME, 'canOpenApp', []);
   },
-  init: function(navController, paths) {
+  route: function(paths, success, error) {
     var self = this;
 
-    this.navController = navController;
     this.paths = paths;
 
     this.onDeepLink(function(data) {
-      var realPath, pathData, matchedParams, args, finalArgs;
+      var realPath, pathData, matchedParams, args, finalArgs, didRoute;
 
       console.log('DeepLink: CHECKING PATHS', data);
       realPath = self._getRealPath(data);
@@ -46,10 +45,30 @@ var IonicDeeplink = {
 
         if(matchedParams !== false) {
           finalArgs = extend({}, matchedParams, args);
-          self.navController.push(pathData, finalArgs);
+
+          success(extend({
+            routeData: pathData
+          }, data), finalArgs);
+
+          didRoute = true;
         }
       }
+
+      if(!didRoute) {
+        error(extend({
+          routeData: pathData
+        }, data));
+      }
     })
+  },
+  routeWithNavController: function(navController, paths, success, error) {
+    var self = this;
+    this.route(paths, function(routeInfo, args) {
+      navController.push(routeInfo.routeData, args);
+      success(routeInfo, args);
+    }, function(routeInfo) {
+      error(routeInfo);
+    });
   },
 
   /**
