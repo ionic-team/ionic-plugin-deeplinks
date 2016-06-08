@@ -45,18 +45,23 @@ public class IonicDeeplink extends CordovaPlugin {
   public void initialize(CordovaInterface cordova, CordovaWebView webView) {
     super.initialize(cordova, webView);
     Log.d(TAG, "IonicDeepLinkPlugin: firing up...");
+
+    handleIntent(cordova.getActivity().getIntent());
   }
 
   @Override
   public void onNewIntent(Intent intent) {
-    final String intentString = intent.getDataString();
+    handleIntent(intent);
+  }
 
+  public void handleIntent(Intent intent) {
+    final String intentString = intent.getDataString();
 
     // read intent
     String action = intent.getAction();
     Uri url = intent.getData();
     JSONObject bundleData = this._bundleToJson(intent.getExtras());
-    //Log.d(TAG, "Got a new intent: " + intentString + " " + intent.getScheme() + " " + action + " " + url);
+    Log.d(TAG, "Got a new intent: " + intentString + " " + intent.getScheme() + " " + action + " " + url);
 
     // if app was not launched by the url - ignore
     if (!Intent.ACTION_VIEW.equals(action) || url == null) {
@@ -89,7 +94,15 @@ public class IonicDeeplink extends CordovaPlugin {
     return true;
   }
 
+  /**
+   * Try to consume any waiting intent events by sending them to our plugin
+   * handlers. We will only do this if we have active handlers so the message isn't lost.
+   */
   private void consumeEvents() {
+    if(this._handlers.size() == 0 || lastEvent == null) {
+      return;
+    }
+
     for(CallbackContext callback : this._handlers) {
       sendToJs(lastEvent, callback);
     }
@@ -104,13 +117,14 @@ public class IonicDeeplink extends CordovaPlugin {
 
   private void addHandler(JSONArray args, final CallbackContext callbackContext) {
     this._handlers.add(callbackContext);
+    this.consumeEvents();
   }
 
   private JSONObject _bundleToJson(Bundle bundle) {
     if(bundle == null) {
       return new JSONObject();
     }
-    
+
     JSONObject j = new JSONObject();
     Set<String> keys = bundle.keySet();
     for(String key : keys) {
