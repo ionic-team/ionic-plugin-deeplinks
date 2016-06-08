@@ -28,6 +28,7 @@ static NSString *const PLUGIN_NAME = @"IonicDeeplinkPlugin";
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     NSLog(@"OPEN URL CALLED %@", [url absoluteString]);
 
+
     IonicDeeplinkPlugin *plugin = [self.viewController getCommandInstance:PLUGIN_NAME];
 
     if(plugin == nil) {

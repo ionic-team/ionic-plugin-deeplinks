@@ -32,6 +32,8 @@
 
 - (void)onDeepLink:(CDVInvokedUrlCommand *)command {
   [_handlers addObject:command.callbackId];
+  // Try to consume any events we got before we were listening
+  [self sendToJs];
 }
 
 - (BOOL)handleLink:(NSURL *)url {
@@ -61,7 +63,7 @@
 
 - (void) sendToJs {
   // Send the last event to JS if we have one
-  if (_lastEvent == nil) {
+  if (_handlers.count == 0 || _lastEvent == nil) {
     return;
   }
 
