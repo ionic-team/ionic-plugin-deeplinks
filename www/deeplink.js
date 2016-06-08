@@ -50,7 +50,7 @@ var IonicDeeplink = {
 
   _getRealPath: function(data) {
     var standardSchemes = ['http', 'https'];
-    for(var i = 0; i < standardSchemes; i++) {
+    for(var i = 0; i < standardSchemes.length; i++) {
       if(data.scheme == standardSchemes[i]) {
         // We found a standard scheme, so we'll assume the path
         // portion of the URL is the real path

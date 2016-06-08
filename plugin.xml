@@ -11,11 +11,11 @@
     <issue>https://github.com/driftyco/ionic-plugin-deeplink/issues</issue>
 
     <preference name="URL_SCHEME" />
+    <preference name="DEEPLINK_SCHEME" default="" />
+    <preference name="DEEPLINK_HOST" default="" />
 
     <!-- android -->
     <platform name="android">
-      <preference name="ANDROID_SCHEME" default=" " />
-      <preference name="ANDROID_HOST" default=" " />
 
       <js-module src="www/deeplink.js" name="keyboard">
         <runs/>
@@ -40,7 +40,7 @@
           <action android:name="android.intent.action.VIEW" />
           <category android:name="android.intent.category.DEFAULT" />
           <category android:name="android.intent.category.BROWSABLE" />
-          <data android:scheme="$ANDROID_SCHEME" android:host="$ANDROID_HOST" />
+          <data android:scheme="$DEEPLINK_SCHEME" android:host="$DEEPLINK_HOST" />
         </intent-filter>
       </config-file>
 

@@ -42,8 +42,7 @@ public class IonicDeeplink extends CordovaPlugin {
 
   public void initialize(CordovaInterface cordova, CordovaWebView webView) {
     super.initialize(cordova, webView);
-
-    Log.d(TAG, "Initializing Deeplinks Plugin");
+    Log.d(TAG, "IonicDeepLinkPlugin: firing up...");
   }
 
   @Override
@@ -54,7 +53,7 @@ public class IonicDeeplink extends CordovaPlugin {
     // read intent
     String action = intent.getAction();
     Uri url = intent.getData();
-    Log.d(TAG, "Got a new intent: " + intentString + " " + intent.getScheme() + " " + action + " " + url);
+    //Log.d(TAG, "Got a new intent: " + intentString + " " + intent.getScheme() + " " + action + " " + url);
 
     // if app was not launched by the url - ignore
     if (!Intent.ACTION_VIEW.equals(action) || url == null) {
@@ -90,7 +89,6 @@ public class IonicDeeplink extends CordovaPlugin {
 
   public boolean execute(String action, JSONArray args, final CallbackContext callbackContext) throws JSONException {
     if(action.equals("onDeepLink")) {
-      Log.d(TAG, "Adding handler");
       addHandler(args, callbackContext);
     } else if(action.equals("canOpenApp")) {
       Log.d(TAG, "Checking if can open");
