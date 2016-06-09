@@ -21,6 +21,13 @@ var extend = function(out) {
 
 
 var IonicDeeplink = {
+  /**
+   * How long to wait after a deeplink match before navigating.
+   * Default is 800ms which gives the app time to get back and then
+   * smoothly animate.
+   */
+  NAVIGATION_DELAY: 800,
+
   canOpenApp: function(app, cb) {
     exec(cb, null, PLUGIN_NAME, 'canOpenApp', []);
   },
@@ -44,9 +51,11 @@ var IonicDeeplink = {
           finalArgs = extend({}, matchedParams, args);
 
           if(typeof(success) === 'function') {
-            success(extend({
-              routeData: pathData
-            }, data), finalArgs);
+            success({
+              $route: pathData,
+              $args: finalArgs,
+              $link: data
+            });
           }
 
           didRoute = true;
@@ -55,22 +64,27 @@ var IonicDeeplink = {
 
       if(!didRoute) {
         if(typeof(error) === 'function') {
-          error(extend({
-            routeData: pathData
-          }, data));
+          error({
+            $link: data
+          });
         }
       }
     })
   },
   routeWithNavController: function(navController, paths, success, error) {
     var self = this;
-    this.route(paths, function(routeInfo, args) {
-      navController.push(routeInfo.routeData, args);
+    this.route(paths, function(match) {
+
+      // Defer this to ensure animations run
+      setTimeout(function() {
+        navController.push(match.$route, match.$args);
+      }, self.NAVIGATION_DELAY);
+
       if(typeof(success) === 'function') {
-        success(routeInfo, args);
+        success(match);
       }
-    }, function(routeInfo) {
-      error(routeInfo);
+    }, function(nomatch) {
+      error(nomatch);
     });
   },
 

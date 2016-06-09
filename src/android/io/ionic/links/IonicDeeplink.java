@@ -87,7 +87,6 @@ public class IonicDeeplink extends CordovaPlugin {
     if(action.equals("onDeepLink")) {
       addHandler(args, callbackContext);
     } else if(action.equals("canOpenApp")) {
-      Log.d(TAG, "Checking if can open");
       String uri = args.getString(0);
       canOpenApp(uri, callbackContext);
     }
