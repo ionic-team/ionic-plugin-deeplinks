@@ -5,7 +5,7 @@
     "id": "ionic-plugin-deeplinks",
     "platforms": [
       "android",
-      "ios",
+      "ios"
     ]
   },
   "description": "Ionic Deeplinks Plugin",
