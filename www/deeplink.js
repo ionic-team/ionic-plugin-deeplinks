@@ -32,32 +32,33 @@ var IonicDeeplink = {
     this.onDeepLink(function(data) {
       var realPath, pathData, matchedParams, args, finalArgs, didRoute;
 
-      console.log('DeepLink: CHECKING PATHS', data);
       realPath = self._getRealPath(data);
       args = self._queryToObject(data.queryString)
 
       for(var targetPath in paths) {
         pathData = paths[targetPath];
 
-        console.log('Real Path', realPath, targetPath, args);
-
         matchedParams = self.routeMatch(targetPath, realPath);
 
         if(matchedParams !== false) {
           finalArgs = extend({}, matchedParams, args);
 
-          success(extend({
-            routeData: pathData
-          }, data), finalArgs);
+          if(typeof(success) === 'function') {
+            success(extend({
+              routeData: pathData
+            }, data), finalArgs);
+          }
 
           didRoute = true;
         }
       }
 
       if(!didRoute) {
-        error(extend({
-          routeData: pathData
-        }, data));
+        if(typeof(error) === 'function') {
+          error(extend({
+            routeData: pathData
+          }, data));
+        }
       }
     })
   },
@@ -65,7 +66,9 @@ var IonicDeeplink = {
     var self = this;
     this.route(paths, function(routeInfo, args) {
       navController.push(routeInfo.routeData, args);
-      success(routeInfo, args);
+      if(typeof(success) === 'function') {
+        success(routeInfo, args);
+      }
     }, function(routeInfo) {
       error(routeInfo);
     });

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-    id="ionic-plugin-deeplink"
+    id="ionic-plugin-deeplinks"
     version="1.0.8">
     <name>Ionic Deeplink Plugin</name>
     <description>Ionic Deeplink Plugin</description>

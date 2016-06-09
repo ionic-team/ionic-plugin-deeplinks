@@ -8,7 +8,6 @@
   _handlers = [[NSMutableArray alloc] init];
 }
 
-
 /* ------------------------------------------------------------- */
 
 - (void)onAppTerminate {
@@ -47,7 +46,6 @@
 }
 
 - (BOOL)handleContinueUserActivity:(NSUserActivity *)userActivity {
-  NSLog(@"IonicDeepLinkPlugin: Handle continueUserActivity (internal)");
 
   if (![userActivity.activityType isEqualToString:NSUserActivityTypeBrowsingWeb] || userActivity.webpageURL == nil) {
     return NO;
@@ -55,6 +53,7 @@
 
   NSURL *url = userActivity.webpageURL;
   _lastEvent = [self createResult:url];
+  NSLog(@"IonicDeepLinkPlugin: Handle continueUserActivity (internal) %@", url);
 
   [self sendToJs];
 

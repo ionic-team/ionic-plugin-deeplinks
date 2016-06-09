@@ -1,16 +1,16 @@
 {
-  "name": "ionic-plugin-deeplink",
+  "name": "ionic-plugin-deeplinks",
   "version": "1.0.0",
   "cordova": {
-    "id": "ionic-plugin-deeplink",
+    "id": "ionic-plugin-deeplinks",
     "platforms": [
       "android",
       "ios",
     ]
   },
-  "description": "Ionic Cloud Deeplink Plugin",
-  "repository": "https://github.com/driftyco/ionic-plugin-deeplink.git",
-  "issue": "https://github.com/driftyco/ionic-plugin-deeplink/issues",
+  "description": "Ionic Deeplinks Plugin",
+  "repository": "https://github.com/driftyco/ionic-plugin-deeplinks.git",
+  "issue": "https://github.com/driftyco/ionic-plugin-deeplinks/issues",
   "keywords": [
     "ionic",
     "cordova",
@@ -22,6 +22,6 @@
     "cordova-android",
     "cordova-ios"
   ],
-  "author": "Ionic",
+  "author": "Max Lynch <max@ionic.io>",
   "license": "MIT"
 }
