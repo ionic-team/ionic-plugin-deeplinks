@@ -33,7 +33,7 @@ Fill in the appropriate values as shown below:
 
 Using [Ionic Native](https://github.com/driftyco/ionic-native):
 
-```typescript
+```javascript
 import {Deeplinks} from 'ionic-native';
 
 Deeplinks.route({
@@ -53,7 +53,7 @@ Deeplinks.route({
 
 If you're using Ionic 2, there is a convenience method to route automatically (see the simple [Ionic 2 Deeplinks](https://github.com/driftyco/ionic2-deeplinks-demo/blob/master/app/app.ts) demo for an example):
 
-```typescript
+```javascript
 Deeplinks.routeWithNavController(this.navController, {
   '/about-us': AboutPage,
   '/universal-links-test': AboutPage,
