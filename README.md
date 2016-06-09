@@ -58,15 +58,9 @@ Deeplinks.routeWithNavController(this.navController, {
   '/about-us': AboutPage,
   '/universal-links-test': AboutPage,
   '/products/:productId': ProductPage
-}).subscribe((match) => {
-  // match.$route - the route we matched, which is the matched entry from the arguments to route()
-  // match.$args - the args passed in the link
-  // match.$link - the full link data
-  console.log('Successfully matched route', match);
-}, (nomatch) => {
-  // nomatch.$link - the full link data
-  console.error('Got a deeplink that didn\'t match', nomatch);
 });
+
+// Note: routeWithNavController also returns an observable you can also subscribe to for success/error in matching as in the first example
 ```
 
 Coming soon: VanillaJS and Ionic 1/Angular 1 instructions
