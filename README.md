@@ -5,7 +5,7 @@ This plugin makes it easy to respond to deeplinks through custom URL schemes
 and Universal/App Links on iOS and Android.
 
 For example, you can have your app open through a link to https://yoursite.com/product/cool-beans and then navigate
-to display the Cool Beans in your store (cool beans!).
+to display the Cool Beans in your app (cool beans!).
 
 Additionally, on Android and pre 9.2 iOS, your app can be opened through a custom URL scheme, like `coolbeans://app/product/cool-beans`.
 
