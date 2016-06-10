@@ -109,8 +109,23 @@ angular.module('myApp', ['ionic', 'ionic.native'])
 
 #### Non-Ionic/angular
 
-The plugin is available on `window.IonicDeeplink` with the same API as above. Additionally,
 Ionic Native works with non-Ionic/Angular projects and can be accessed at `window.IonicNative` if imported.
+
+If you don't want to use Ionic Native, the plugin is available on `window.IonicDeeplink` with a similar API minus the observable callback:
+
+```javascript
+window.addEventListener('deviceready', function() {
+  IonicDeeplink.route({
+    '/product/:productId': {
+      target: 'product',
+      parent: 'products'
+    }
+  }, function(match) {
+  }, function(nomatch) {
+  });
+})
+```
+
 
 ## iOS Configuration
 
