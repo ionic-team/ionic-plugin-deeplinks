@@ -56,7 +56,6 @@ If you're using Ionic 2, there is a convenience method to route automatically (s
 ```javascript
 Deeplinks.routeWithNavController(this.navController, {
   '/about-us': AboutPage,
-  '/universal-links-test': AboutPage,
   '/products/:productId': ProductPage
 });
 
@@ -64,6 +63,45 @@ Deeplinks.routeWithNavController(this.navController, {
 ```
 
 Coming soon: VanillaJS and Ionic 1/Angular 1 instructions
+
+For Ionic 1 and Angular 1 apps using Ionic Native, there are many ways we can handle deeplinks. However,
+we need to make sure we set up a history stack for the user, we can't navigate directly to our page
+because Ionic 1's navigation system won't properly build the navigation stack (to show a back button, for example).
+
+This is all fine because deeplinks should provide the user with a designed experience for what the back button
+should do, as we are putting them deep into the app and need to provide a natural way back to the main flow:
+
+```javascript
+angular.module('myApp', ['ionic', 'ionic.native'])
+
+.run(['$ionicPlatform', '$cordovaDeeplinks', '$state', '$timeout', function($ionicPlatform, $cordovaDeeplinks, $state, $timeout) {
+  $ionicPlatform.ready(function() {
+    // Note: route's first argument can take any kind of object as its data,
+    // and will send along the matching object if the route matches the deeplink
+    $cordovaDeeplinks.route({
+      '/product/:productId': {
+        target: 'product',
+        parent: 'products'
+      }
+    }).subscribe(function(match) {
+      // One of our routes matched, we will quickly navigate to our parent
+      // view to give the user a natural back button flow
+      $timeout(function() {
+        $state.go(match.$route.parent, match.$args);
+
+        // Finally, we will navigate to the deeplink page. Now the user has
+        // the 'product' view visibile, and the back button goes back to the
+        // 'products' view.
+        $timeout(function() {
+          $state.go(match.$route.target, match.$args);
+        }, 800);
+      }, 100); // Timeouts can be tweaked to customize the feel of the deeplink
+    }, function(nomatch) {
+      console.warn('No match', nomatch);
+    });
+  });
+}])
+```
 
 ## iOS Configuration
 
