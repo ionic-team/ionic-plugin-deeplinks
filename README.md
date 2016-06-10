@@ -29,6 +29,8 @@ Fill in the appropriate values as shown below:
 
 ## Handling Deeplinks in JavaScript
 
+#### Ionic/Angular 2
+
 *note: make sure to call IonicDeeplink from a platform.ready or `deviceready` event*
 
 Using [Ionic Native](https://github.com/driftyco/ionic-native) (available in 1.2.4 or greater):
@@ -62,7 +64,7 @@ Deeplinks.routeWithNavController(this.navController, {
 // Note: routeWithNavController also returns an observable you can also subscribe to for success/error in matching as in the first example
 ```
 
-Coming soon: VanillaJS and Ionic 1/Angular 1 instructions
+#### Ionic/Angular 1
 
 For Ionic 1 and Angular 1 apps using Ionic Native, there are many ways we can handle deeplinks. However,
 we need to make sure we set up a history stack for the user, we can't navigate directly to our page
@@ -102,6 +104,11 @@ angular.module('myApp', ['ionic', 'ionic.native'])
   });
 }])
 ```
+
+#### Non-Ionic/angular
+
+The plugin is available on `window.IonicDeeplink` with the same API as above. Additionally,
+Ionic Native works with non-Ionic/Angular projects and can be accessed at `window.IonicNative` if imported.
 
 ## iOS Configuration
 
