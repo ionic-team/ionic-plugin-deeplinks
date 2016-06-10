@@ -14,6 +14,8 @@ Since Custom URL scheme behavior has changed quite a bit in iOS 9.2 for the case
 *Note: this plugin may clash with existing Custom URL Scheme and Universal Links Plugins. Please let
 us know if you encounter compatibility issues. Also, try removing them and using this one on its own.*
 
+Thank you to the [Cordova Universal Links Plugin](https://github.com/nordnet/cordova-universal-links-plugin) and the [Custom URL Scheme](https://github.com/EddyVerbruggen/Custom-URL-scheme) plugin that this plugin is inspired and borrows from.
+
 ## Installation
 
 ```bash
