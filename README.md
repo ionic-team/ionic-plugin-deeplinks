@@ -73,6 +73,8 @@ because Ionic 1's navigation system won't properly build the navigation stack (t
 This is all fine because deeplinks should provide the user with a designed experience for what the back button
 should do, as we are putting them deep into the app and need to provide a natural way back to the main flow:
 
+(See a simple [demo](https://github.com/driftyco/ionic1-deeplinks-demo) of v1 deeplinking).
+
 ```javascript
 angular.module('myApp', ['ionic', 'ionic.native'])
 
