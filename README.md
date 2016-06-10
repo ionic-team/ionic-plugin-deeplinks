@@ -7,9 +7,9 @@ and Universal/App Links on iOS and Android.
 For example, you can have your app open through a link to https://yoursite.com/product/cool-beans and then navigate
 to display the Cool Beans in your app (cool beans!).
 
-Additionally, on Android and pre 9.2 iOS, your app can be opened through a custom URL scheme, like `coolbeans://app/product/cool-beans`.
+Additionally, on Android iOS, your app can be opened through a custom URL scheme, like `coolbeans://app/product/cool-beans`.
 
-Since Custom URL schemes are no longer supported on iOS >= 9.2 iOS, you'll need to [configure Universal Links](#ios-configuration)
+Since Custom URL scheme behavior has changed quite a bit in iOS 9.2 for the case where the app isn't installed, you'll want to start using [Universal Links](#ios-configuration) as it's clear custom URL schemes are on the way out.
 
 *Note: this plugin may clash with existing Custom URL Scheme and Universal Links Plugins. Please let
 us know if you encounter compatibility issues. Also, try removing them and using this one on its own.*
