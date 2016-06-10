@@ -31,7 +31,7 @@ Fill in the appropriate values as shown below:
 
 *note: make sure to call IonicDeeplink from a platform.ready or `deviceready` event*
 
-Using [Ionic Native](https://github.com/driftyco/ionic-native):
+Using [Ionic Native](https://github.com/driftyco/ionic-native) (available in 1.2.4 or greater):
 
 ```javascript
 import {Deeplinks} from 'ionic-native';
