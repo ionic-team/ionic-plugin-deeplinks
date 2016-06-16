@@ -19,7 +19,7 @@ Thank you to the [Cordova Universal Links Plugin](https://github.com/nordnet/cor
 ## Installation
 
 ```bash
-cordova plugin add ionic-plugin-deeplinks --variable URL_SCHEME myapp --variable DEEPLINK_SCHEME=https DEEPLINK_HOST=example.com
+cordova plugin add ionic-plugin-deeplinks --variable URL_SCHEME=myapp --variable DEEPLINK_SCHEME=https --variable DEEPLINK_HOST=example.com 
 ```
 
 Fill in the appropriate values as shown below:
