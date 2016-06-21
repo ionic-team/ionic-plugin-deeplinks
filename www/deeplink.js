@@ -151,6 +151,10 @@ var IonicDeeplink = {
       callback(data);
     };
     exec(innerCB, null, PLUGIN_NAME, 'onDeepLink', []);
+  },
+
+  getHardwareInfo: function(callback) {
+    exec(callback, null, PLUGIN_NAME, 'getHardwareInfo', []);
   }
 };
 

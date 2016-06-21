@@ -20,6 +20,9 @@ import org.json.JSONObject;
 import org.json.JSONArray;
 import org.json.JSONException;
 
+import java.util.Date;
+import java.util.TimeZone;
+
 import android.util.Log;
 import android.content.Intent;
 import android.content.Context;
@@ -28,9 +31,11 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.ViewTreeObserver.OnGlobalLayoutListener;
 import android.view.inputmethod.InputMethodManager;
+import android.telephony.TelephonyManager;
 import android.net.Uri;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.provider.Settings;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -89,6 +94,8 @@ public class IonicDeeplink extends CordovaPlugin {
     } else if(action.equals("canOpenApp")) {
       String uri = args.getString(0);
       canOpenApp(uri, callbackContext);
+    } else if(action.equals("getHardwareInfo")) {
+      getHardwareInfo(args, callbackContext);
     }
     return true;
   }
@@ -150,5 +157,57 @@ public class IonicDeeplink extends CordovaPlugin {
     } catch(PackageManager.NameNotFoundException e) {}
 
     callbackContext.error("");
+  }
+
+  private void getHardwareInfo(JSONArray args, final CallbackContext callbackContext) {
+    String uuid = Settings.Secure.getString(this.cordova.getActivity().getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+
+    JSONObject j = new JSONObject();
+    try {
+      j.put("uuid", uuid);
+      j.put("platform", this.getPlatform());
+      j.put("tz", this.getTimeZoneID());
+      j.put("tz_offset", this.getTimeZoneOffset());
+      j.put("os_version", this.getOSVersion());
+      j.put("sdk_version", this.getSDKVersion());
+    } catch(JSONException ex) {}
+
+    final PluginResult result = new PluginResult(PluginResult.Status.OK, j);
+    callbackContext.sendPluginResult(result);
+  }
+
+  private boolean isAmazonDevice() {
+    if (android.os.Build.MANUFACTURER.equals("Amazon")) {
+      return true;
+    }
+    return false;
+  }
+  private String getTimeZoneID() {
+    TimeZone tz = TimeZone.getDefault();
+    return (tz.getID());
+  }
+
+  private int getTimeZoneOffset() {
+    TimeZone tz = TimeZone.getDefault();
+    return tz.getOffset(new Date().getTime()) / 1000 / 60;
+  }
+
+  private String getSDKVersion() {
+    @SuppressWarnings("deprecation")
+    String sdkversion = android.os.Build.VERSION.SDK;
+    return sdkversion;
+  }
+  private String getOSVersion() {
+    String osversion = android.os.Build.VERSION.RELEASE;
+    return osversion;
+  }
+  private String getPlatform() {
+    String platform;
+    if (isAmazonDevice()) {
+      platform = "amazon-fireos";
+    } else {
+      platform = "android";
+    }
+    return platform;
   }
 }
