@@ -81,6 +81,7 @@ public class IonicDeeplink extends CordovaPlugin {
       lastEvent.put("queryString", url.getQuery());
       lastEvent.put("scheme", url.getScheme());
       lastEvent.put("host", url.getHost());
+      lastEvent.put("fragment", url.getFragment());
       lastEvent.put("extra", bundleData);
       consumeEvents();
     } catch(JSONException ex) {

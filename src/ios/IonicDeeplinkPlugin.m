@@ -83,7 +83,8 @@
     @"path": [url path] ?: @"",
     @"queryString": [url query] ?: @"",
     @"scheme": [url scheme] ?: @"",
-    @"host": [url host] ?: @""
+    @"host": [url host] ?: @"",
+    @"fragment": [url fragment] ?: @""
   };
 
   CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:data];
