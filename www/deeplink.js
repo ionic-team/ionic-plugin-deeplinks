@@ -84,7 +84,9 @@ var IonicDeeplink = {
         success(match);
       }
     }, function(nomatch) {
-      error(nomatch);
+      if(typeof(error) === 'function') {
+        error(nomatch);
+      }
     });
   },
 
@@ -143,7 +145,10 @@ var IonicDeeplink = {
       if(data.host.charAt(0) != '/') data.host = '/' + data.host;
       return data.host;
     }
-    return data.path;
+
+    var restOfUrl = data.url.slice(data.url.indexOf(data.host) + data.host.length);
+
+    return restOfUrl;
   },
 
   onDeepLink: function(callback) {
