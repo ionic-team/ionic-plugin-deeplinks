@@ -16,6 +16,7 @@
 
     <!-- android -->
     <platform name="android">
+      <preference name="ANDROID_PATH_PREFIX" default="/" />
 
       <js-module src="www/deeplink.js" name="keyboard">
         <runs/>
@@ -40,7 +41,7 @@
           <action android:name="android.intent.action.VIEW" />
           <category android:name="android.intent.category.DEFAULT" />
           <category android:name="android.intent.category.BROWSABLE" />
-          <data android:scheme="$DEEPLINK_SCHEME" android:host="$DEEPLINK_HOST" />
+          <data android:scheme="$DEEPLINK_SCHEME" android:host="$DEEPLINK_HOST" android:pathPrefix="$ANDROID_PATH_PREFIX" />
         </intent-filter>
       </config-file>
 
