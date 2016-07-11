@@ -19,7 +19,9 @@ Thank you to the [Cordova Universal Links Plugin](https://github.com/nordnet/cor
 ## Installation
 
 ```bash
-cordova plugin add ionic-plugin-deeplinks --variable URL_SCHEME=myapp --variable DEEPLINK_SCHEME=https --variable DEEPLINK_HOST=example.com 
+cordova plugin add ionic-plugin-deeplinks 
+--variable URL_SCHEME=myapp --variable DEEPLINK_SCHEME=https --variable DEEPLINK_HOST=example.com
+--variable ANDROID_PATH_PREFIX=/
 ```
 
 Fill in the appropriate values as shown below:
@@ -27,7 +29,7 @@ Fill in the appropriate values as shown below:
  * `URL_SCHEME` - the custom URL scheme you'd like to use for your app. This lets your app respond to links like `myapp://blah`
  * `DEEPLINK_SCHEME` - the scheme to use for universal/app links. 99% of the time you'll use `https` here as iOS and Android require SSL for app links domains.
  * `DEEPLINK_HOST` - the host that will respond to deeplinks. For example, if we want `example.com/product/cool-beans` to open in our app, we'd use `example.com` here.
-
+ * `ANDROID_PATH_PREFIX` - (optional): specify which path prefix our Android app should open from [more info](https://developer.android.com/guide/topics/manifest/data-element.html)
 
 ## Handling Deeplinks in JavaScript
 
