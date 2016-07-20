@@ -148,7 +148,9 @@ var IonicDeeplink = {
 
     var restOfUrl = data.url.slice(data.url.indexOf(data.host) + data.host.length);
 
-    restOfUrl = restOfUrl.slice(0, restOfUrl.indexOf('?' + data.queryString));
+    if(restOfUrl.indexOf('?') > -1) {
+        restOfUrl = restOfUrl.slice(0, restOfUrl.indexOf('?'));
+    }
 
     return restOfUrl;
   },
