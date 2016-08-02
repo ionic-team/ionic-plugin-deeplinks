@@ -62,14 +62,15 @@ function getOldProjectName(projectDir) {
     return '';
   }
 
-  var projectFile = files.find(function(fileName) {
+  var projectFiles = files.filter(function(fileName) {
     return path.extname(fileName) === '.xcodeproj';
   });
-  if (!projectFile) {
+
+  if (!projectFiles.length) {
     return '';
   }
 
-  return path.basename(projectFile, '.xcodeproj');
+  return path.basename(projectFiles[0], '.xcodeproj');
 }
 
 // endregion
