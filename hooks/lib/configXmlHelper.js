@@ -1,5 +1,7 @@
 /*
 Helper class to read data from config.xml file.
+
+ This file has been originally written by Nikolay Demyankov for the cordova-universal-links-plugin: https://github.com/nordnet/cordova-universal-links-plugin
 */
 var path = require('path');
 var xmlHelper = require('./xmlHelper.js');

@@ -4,6 +4,8 @@ Which is:
 - deployment target set to iOS 9.0
 - .entitlements file added to project PBXGroup and PBXFileReferences section
 - path to .entitlements file added to Code Sign Entitlements preference
+
+ This file has been originally written by Nikolay Demyankov for the cordova-universal-links-plugin: https://github.com/nordnet/cordova-universal-links-plugin
 */
 
 var path = require('path');

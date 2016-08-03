@@ -4,6 +4,8 @@ File name is: ProjectName.entitlements
 Location: ProjectName/
 
 Script only generates content. File it self is included in the xcode project in another hook: xcodePreferences.js.
+
+ This file has been originally written by Nikolay Demyankov for the cordova-universal-links-plugin: https://github.com/nordnet/cordova-universal-links-plugin
 */
 
 var path = require('path');

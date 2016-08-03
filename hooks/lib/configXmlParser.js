@@ -1,5 +1,7 @@
 /*
 Parser for config.xml file. Read plugin-specific preferences (from <universal-links> tag) as JSON object.
+
+ This file has been originally written by Nikolay Demyankov for the cordova-universal-links-plugin: https://github.com/nordnet/cordova-universal-links-plugin
 */
 var path = require('path');
 var ConfigXmlHelper = require('./configXmlHelper.js');

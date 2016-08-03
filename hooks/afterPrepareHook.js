@@ -2,6 +2,8 @@
  Hook is executed at the end of the 'prepare' stage. Usually, when you call 'cordova build'.
  It will inject required preferences in the platform-specific projects, based on <universal-links>
  data you have specified in the projects config.xml file.
+
+ This file has been originally written by Nikolay Demyankov for the cordova-universal-links-plugin: https://github.com/nordnet/cordova-universal-links-plugin
  */
 
 var configParser = require('./lib/configXmlParser.js');

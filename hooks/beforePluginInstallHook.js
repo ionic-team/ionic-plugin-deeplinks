@@ -1,6 +1,8 @@
 /**
 Hook is executed when plugin is added to the project.
 It will check all necessary module dependencies and install the missing ones locally.
+
+ This file has been originally written by Nikolay Demyankov for the cordova-universal-links-plugin: https://github.com/nordnet/cordova-universal-links-plugin
 */
 
 var path = require('path');
