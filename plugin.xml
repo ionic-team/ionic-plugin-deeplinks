@@ -18,7 +18,7 @@
     <platform name="android">
       <preference name="ANDROID_PATH_PREFIX" default="/" />
 
-      <js-module src="www/deeplink.js" name="keyboard">
+      <js-module src="www/deeplink.js" name="deeplink">
         <runs/>
         <clobbers target="IonicDeeplink" />
       </js-module>
@@ -74,5 +74,15 @@
         <source-file src="src/ios/AppDelegate+IonicDeeplink.m" />
         <header-file src="src/ios/IonicDeeplinkPlugin.h" />
         <source-file src="src/ios/IonicDeeplinkPlugin.m" />
+    </platform>
+
+    <platform name="browser">
+      <js-module src="www/deeplink.js" name="deeplink">
+        <runs/>
+        <clobbers target="IonicDeeplink" />
+      </js-module>
+      <js-module src="src/browser/DeeplinkProxy.js" name="IonicDeeplinkProxy">
+        <runs />
+      </js-module>
     </platform>
 </plugin>

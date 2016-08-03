@@ -5,6 +5,8 @@ var argscheck = require('cordova/argscheck'),
 
 var PLUGIN_NAME = 'IonicDeeplinkPlugin';
 
+console.log('Running internally');
+
 var extend = function(out) {
   out = out || {};
 
@@ -37,6 +39,7 @@ var IonicDeeplink = {
     this.paths = paths;
 
     this.onDeepLink(function(data) {
+      console.log('On deep link', data);
       var realPath, pathData, matchedParams, args, finalArgs, didRoute;
 
       realPath = self._getRealPath(data);
@@ -158,9 +161,9 @@ var IonicDeeplink = {
     if(data.fragment) {
       var fi = data.fragment.indexOf('?');
       if(fi > -1) {
-        return data.fragment.slice(0, fi);
+        return data.fragment.slice(0, fi).slice(1);
       }
-      return data.fragment;
+      return data.fragment.slice(1);
     }
 
     if(!data.path) {
