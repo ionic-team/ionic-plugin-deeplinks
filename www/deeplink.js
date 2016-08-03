@@ -40,7 +40,7 @@ var IonicDeeplink = {
       var realPath, pathData, matchedParams, args, finalArgs, didRoute;
 
       realPath = self._getRealPath(data);
-      args = self._queryToObject(data.queryString)
+      args = self._queryToObject(data.url)
 
       for(var targetPath in paths) {
         pathData = paths[targetPath];
@@ -128,6 +128,12 @@ var IonicDeeplink = {
   _queryToObject: function(q) {
     if(!q) return {};
 
+    var qIndex = q.lastIndexOf('?');
+    if(qIndex < 0) return {};
+
+    // Get everything after the ?
+    q = q.slice(q.lastIndexOf('?') + 1);
+
     var i = 0, retObj = {}, pair = null,
       qArr = q.split('&');
 
@@ -140,7 +146,23 @@ var IonicDeeplink = {
     return retObj;
   },
 
+  /**
+   * We're fairly flexible when it comes to matching a URL. We support
+   * host-less custom URL scheme matches like ionic://camera?blah but also support
+   * and match against fragments.
+   *
+   * This method tries to infer what the proper "path" is from the URL
+   */
   _getRealPath: function(data) {
+    // If we have a fragment, we use that as the path
+    if(data.fragment) {
+      var fi = data.fragment.indexOf('?');
+      if(fi > -1) {
+        return data.fragment.slice(0, fi);
+      }
+      return data.fragment;
+    }
+
     if(!data.path) {
       if(data.host.charAt(0) != '/') data.host = '/' + data.host;
       return data.host;
@@ -149,7 +171,11 @@ var IonicDeeplink = {
     var restOfUrl = data.url.slice(data.url.indexOf(data.host) + data.host.length);
 
     if(restOfUrl.indexOf('?') > -1) {
-        restOfUrl = restOfUrl.slice(0, restOfUrl.indexOf('?'));
+      restOfUrl = restOfUrl.slice(0, restOfUrl.indexOf('?'));
+    }
+
+    if(restOfUrl.indexOf('#') > -1) {
+      restOfUrl = restOfUrl.slice(0)
     }
 
     return restOfUrl;
