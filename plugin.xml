@@ -41,7 +41,7 @@
           <category android:name="android.intent.category.BROWSABLE" />
           <data android:scheme="$URL_SCHEME" />
         </intent-filter>
-        <intent-filter android:autoVerify="true">
+        <intent-filter>
           <action android:name="android.intent.action.VIEW" />
           <category android:name="android.intent.category.DEFAULT" />
           <category android:name="android.intent.category.BROWSABLE" />
