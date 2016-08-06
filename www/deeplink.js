@@ -5,8 +5,6 @@ var argscheck = require('cordova/argscheck'),
 
 var PLUGIN_NAME = 'IonicDeeplinkPlugin';
 
-console.log('Running internally');
-
 var extend = function(out) {
   out = out || {};
 
