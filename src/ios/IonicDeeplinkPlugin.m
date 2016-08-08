@@ -2,8 +2,6 @@
 
 #import <Cordova/CDVAvailability.h>
 
-@import AdSupport;
-
 @implementation IonicDeeplinkPlugin
 
 - (void)pluginInitialize {
@@ -95,10 +93,19 @@
 - (void)getHardwareInfo:(CDVInvokedUrlCommand *)command {
   NSMutableDictionary *info = [[NSMutableDictionary alloc] init];
 
-  if([[ASIdentifierManager sharedManager] isAdvertisingTrackingEnabled]) {
-    NSUUID *IDFA = [[ASIdentifierManager sharedManager] advertisingIdentifier];
-    NSString *adId = [IDFA UUIDString];
-    if(adId && [adId length] > 0) {
+  // Get the as id in a way that doesn't require it be linked
+  Class asIdManClass = NSClassFromString(@"ASIdentifierManager");
+
+  if(asIdManClass) {
+    SEL sharedManagerSel = NSSelectorFromString(@"sharedManager");
+    id sharedManager = ((id (*)(id, SEL))[asIdManClass methodForSelector:sharedManagerSel])(asIdManClass, sharedManagerSel);
+    SEL advertisingIdentifierSelector = NSSelectorFromString(@"advertisingIdentifier");
+    NSUUID *uuid = ((NSUUID* (*)(id, SEL))[sharedManager methodForSelector:advertisingIdentifierSelector])(sharedManager, advertisingIdentifierSelector);
+    NSString *adId = [uuid UUIDString];
+
+    // Check if ad tracking is disabled (happens on iOS 10+)
+    NSString *disabledString = @"00000000-0000-0000-0000-000000000000";
+    if (![adId isEqualToString:disabledString]) {
       [info setObject:adId forKey:@"adid"];
     }
   }
