@@ -72,13 +72,31 @@ var IonicDeeplink = {
       }
     })
   },
-  routeWithNavController: function(navController, paths, success, error) {
+
+  routeWithNavController: function(navController, paths, options, success, error) {
     var self = this;
+
+    var defaultOptions = {
+      root: false
+    };
+
+    if(typeof options !== 'function') {
+      options = extend(defaultOptions, options);
+    } else {
+      success = options;
+      error = success;
+      options = defaultOptions;
+    }
+
     this.route(paths, function(match) {
 
       // Defer this to ensure animations run
       setTimeout(function() {
-        navController.push(match.$route, match.$args);
+        if(options.root === true) {
+          navController.setRoot(match.$route, match.$args);
+        } else {
+          navController.push(match.$route, match.$args);
+        }
       }, self.NAVIGATION_DELAY);
 
       if(typeof(success) === 'function') {
