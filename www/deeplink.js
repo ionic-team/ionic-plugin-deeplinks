@@ -26,7 +26,6 @@ var IonicDeeplink = {
    * Default is 800ms which gives the app time to get back and then
    * smoothly animate.
    */
-  NAVIGATION_DELAY: 800,
 
   canOpenApp: function(app, cb) {
     exec(cb, null, PLUGIN_NAME, 'canOpenApp', []);
@@ -91,13 +90,11 @@ var IonicDeeplink = {
     this.route(paths, function(match) {
 
       // Defer this to ensure animations run
-      setTimeout(function() {
-        if(options.root === true) {
-          navController.setRoot(match.$route, match.$args);
-        } else {
-          navController.push(match.$route, match.$args);
-        }
-      }, self.NAVIGATION_DELAY);
+      if(options.root === true) {
+        navController.setRoot(match.$route, match.$args);
+      } else {
+        navController.push(match.$route, match.$args);
+      }
 
       if(typeof(success) === 'function') {
         success(match);
