@@ -39,6 +39,8 @@ import android.provider.Settings;
 
 import java.util.ArrayList;
 import java.util.Set;
+import java.util.Collection;
+import java.util.Map;
 
 public class IonicDeeplink extends CordovaPlugin {
   private static final String TAG = "IonicDeeplinkPlugin";
@@ -136,11 +138,59 @@ public class IonicDeeplink extends CordovaPlugin {
     Set<String> keys = bundle.keySet();
     for(String key : keys) {
       try {
-        j.put(key, JSONObject.wrap(bundle.get(key)));
+        Class<?> jsonClass = j.getClass();
+        Class[] cArg = new Class[1];
+        cArg[0] = String.class;
+        //Workaround for API < 19
+        try{
+          if(jsonClass.getDeclaredMethod("wrap", cArg) != null){
+            j.put(key, JSONObject.wrap(bundle.get(key)));
+          }
+        }
+        catch(NoSuchMethodException e) {
+          j.put(key, this._wrap(bundle.get(key)));
+        }
       } catch(JSONException ex) {}
     }
 
     return j;
+  }
+  //Wrap method not available in JSONObject API < 19
+  private Object _wrap(Object o){
+    if (o == null) {
+      return null;
+    }
+    if (o instanceof JSONArray || o instanceof JSONObject) {
+      return o;
+    }
+    if (o.equals(null)) {
+      return o;
+    }
+    try {
+      if (o instanceof Collection) {
+        return new JSONArray((Collection) o);
+      } else if (o.getClass().isArray()) {
+        return new JSONArray(o);
+      }
+      if (o instanceof Map) {
+        return new JSONObject((Map) o);
+      }
+      if (o instanceof Boolean ||
+          o instanceof Byte ||
+          o instanceof Character ||
+          o instanceof Double ||
+          o instanceof Float ||
+          o instanceof Integer ||
+          o instanceof Long ||
+          o instanceof Short ||
+          o instanceof String) {
+        return o;
+      }
+      if (o.getClass().getPackage().getName().startsWith("java.")) {
+        return o.toString();
+      }
+    } catch (Exception ignored) {}
+    return null;
   }
 
   /**
