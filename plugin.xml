@@ -13,10 +13,19 @@
     <preference name="URL_SCHEME" />
     <preference name="DEEPLINK_SCHEME" default="" />
     <preference name="DEEPLINK_HOST" default="" />
+    <preference name="DEEPLINK_SCHEME_2" default="" />
+    <preference name="DEEPLINK_HOST_2" default="" />
+    <preference name="DEEPLINK_SCHEME_3" default="" />
+    <preference name="DEEPLINK_HOST_3" default="" />
+    <preference name="DEEPLINK_SCHEME_4" default="" />
+    <preference name="DEEPLINK_HOST_4" default="" />
 
     <!-- android -->
     <platform name="android">
       <preference name="ANDROID_PATH_PREFIX" default="/" />
+      <preference name="ANDROID_PATH_PREFIX_2" default="/" />
+      <preference name="ANDROID_PATH_PREFIX_3" default="/" />
+      <preference name="ANDROID_PATH_PREFIX_4" default="/" />
 
       <js-module src="www/deeplink.js" name="deeplink">
         <runs/>
@@ -42,6 +51,9 @@
           <category android:name="android.intent.category.DEFAULT" />
           <category android:name="android.intent.category.BROWSABLE" />
           <data android:scheme="$DEEPLINK_SCHEME" android:host="$DEEPLINK_HOST" android:pathPrefix="$ANDROID_PATH_PREFIX" />
+          <data android:scheme="$DEEPLINK_SCHEME_2" android:host="$DEEPLINK_HOST_2" android:pathPrefix="$ANDROID_PATH_PREFIX_2" />
+          <data android:scheme="$DEEPLINK_SCHEME_3" android:host="$DEEPLINK_HOST_3" android:pathPrefix="$ANDROID_PATH_PREFIX_3" />
+          <data android:scheme="$DEEPLINK_SCHEME_4" android:host="$DEEPLINK_HOST_4" android:pathPrefix="$ANDROID_PATH_PREFIX_4" />
         </intent-filter>
       </config-file>
 
