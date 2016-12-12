@@ -17,19 +17,19 @@
     <!-- android -->
     <platform name="android">
       <preference name="ANDROID_PATH_PREFIX" default="/" />
-      <preference name="ANDROID_PATH_PREFIX_2" default="/" />
-      <preference name="ANDROID_PATH_PREFIX_3" default="/" />
-      <preference name="ANDROID_PATH_PREFIX_4" default="/" />
-      <preference name="ANDROID_PATH_PREFIX_5" default="/" />
+      <preference name="ANDROID_2_PATH_PREFIX" default="/" />
+      <preference name="ANDROID_3_PATH_PREFIX" default="/" />
+      <preference name="ANDROID_4_PATH_PREFIX" default="/" />
+      <preference name="ANDROID_5_PATH_PREFIX" default="/" />
 
-      <preference name="DEEPLINK_SCHEME_2" default=" " />
-      <preference name="DEEPLINK_HOST_2" default=" " />
-      <preference name="DEEPLINK_SCHEME_3" default=" " />
-      <preference name="DEEPLINK_HOST_3" default=" " />
-      <preference name="DEEPLINK_SCHEME_4" default=" " />
-      <preference name="DEEPLINK_HOST_4" default=" " />
-      <preference name="DEEPLINK_SCHEME_5" default=" " />
-      <preference name="DEEPLINK_HOST_5" default=" " />
+      <preference name="DEEPLINK_2_SCHEME" default=" " />
+      <preference name="DEEPLINK_2_HOST" default=" " />
+      <preference name="DEEPLINK_3_SCHEME" default=" " />
+      <preference name="DEEPLINK_3_HOST" default=" " />
+      <preference name="DEEPLINK_4_SCHEME" default=" " />
+      <preference name="DEEPLINK_4_HOST" default=" " />
+      <preference name="DEEPLINK_5_SCHEME" default=" " />
+      <preference name="DEEPLINK_5_HOST" default=" " />
 
       <js-module src="www/deeplink.js" name="deeplink">
         <runs/>
@@ -55,10 +55,10 @@
           <category android:name="android.intent.category.DEFAULT" />
           <category android:name="android.intent.category.BROWSABLE" />
           <data android:scheme="$DEEPLINK_SCHEME" android:host="$DEEPLINK_HOST" android:pathPrefix="$ANDROID_PATH_PREFIX" />
-          <data android:scheme="$DEEPLINK_SCHEME_2" android:host="$DEEPLINK_HOST_2" android:pathPrefix="$ANDROID_PATH_PREFIX_2" />
-          <data android:scheme="$DEEPLINK_SCHEME_3" android:host="$DEEPLINK_HOST_3" android:pathPrefix="$ANDROID_PATH_PREFIX_3" />
-          <data android:scheme="$DEEPLINK_SCHEME_4" android:host="$DEEPLINK_HOST_4" android:pathPrefix="$ANDROID_PATH_PREFIX_4" />
-          <data android:scheme="$DEEPLINK_SCHEME_5" android:host="$DEEPLINK_HOST_5" android:pathPrefix="$ANDROID_PATH_PREFIX_5" />
+          <data android:scheme="$DEEPLINK_2_SCHEME" android:host="$DEEPLINK_2_HOST" android:pathPrefix="$ANDROID_2_PATH_PREFIX" />
+          <data android:scheme="$DEEPLINK_3_SCHEME" android:host="$DEEPLINK_3_HOST" android:pathPrefix="$ANDROID_3_PATH_PREFIX" />
+          <data android:scheme="$DEEPLINK_4_SCHEME" android:host="$DEEPLINK_4_HOST" android:pathPrefix="$ANDROID_4_PATH_PREFIX" />
+          <data android:scheme="$DEEPLINK_5_SCHEME" android:host="$DEEPLINK_5_HOST" android:pathPrefix="$ANDROID_5_PATH_PREFIX" />
         </intent-filter>
       </config-file>
 
