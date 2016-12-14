@@ -26,11 +26,11 @@ function run(cordovaContext) {
 
     // if no host is defined - exit
     if (deeplinkHost === null) {
-        console.warn('No host is specified in the config.xml. Ionic Deeplinks Plugin is not going to work.');
+        console.warn('No host is specified in the config.xml. Ionic Deeplinks Plugin entitlement generation is not going to work.');
         return;
     }
 
-    platformsList.forEach(function(platform) {
+    platformsList && platformsList.forEach(function(platform) {
         if (platform === IOS) {
             activateUniversalLinksInIos(cordovaContext, deeplinkHost);
         }

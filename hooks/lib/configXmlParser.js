@@ -30,7 +30,7 @@ function getDeeplinkHost(cordovaContext) {
   var xmlDeeplinksPlugin = getXmlDeeplinksPlugin(configXml);
 
   if (xmlDeeplinksPlugin == null || xmlDeeplinksPlugin.length == 0) {
-    console.warn('ionic-plugin-deeplinks is not set in the config.xml. The plugin plugin is not going to work.');
+    console.warn('ionic-plugin-deeplinks is not set in the config.xml. The plugin\'s entitlement generation is not going to work.');
     return null;
   }
 
@@ -47,7 +47,7 @@ function getDeeplinkHost(cordovaContext) {
 function getXmlDeeplinksPlugin(configXml) {
   var xmlPlugins = configXml.widget.plugin;
   var xmlDeeplinksPlugin = null;
-  xmlPlugins.forEach(function(xmlElement) {
+  xmlPlugins && xmlPlugins.forEach(function(xmlElement) {
 
     // look for data from the ionic-plugin-deeplinks element
     if (xmlElement.$.name === 'ionic-plugin-deeplinks') {
@@ -65,7 +65,7 @@ function getXmlDeeplinksPlugin(configXml) {
 function getDeeplinkHostFromDeeplinksConfig(xmlDeeplinksPlugin) {
   var xmlDeeplinksPluginVariables = xmlDeeplinksPlugin['variable'];
   var deeplinkHost = null;
-  xmlDeeplinksPluginVariables.forEach(function(xmlElement) {
+  xmlDeeplinksPluginVariables && xmlDeeplinksPluginVariables.forEach(function(xmlElement) {
     if (xmlElement.$.name === 'DEEPLINK_HOST') {
       deeplinkHost = xmlElement.$.value;
     }
