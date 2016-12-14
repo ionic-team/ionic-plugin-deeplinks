@@ -14,6 +14,10 @@
     <preference name="DEEPLINK_SCHEME" default="https" />
     <preference name="DEEPLINK_HOST" default="" />
 
+    <!-- Hooks -->
+    <hook src="hooks/afterPrepareHook.js" type="after_prepare"/>
+    <hook src="hooks/beforePluginInstallHook.js" type="before_plugin_install" />
+
     <!-- android -->
     <platform name="android">
       <preference name="ANDROID_PATH_PREFIX" default="/" />
@@ -67,6 +71,8 @@
 
     <!-- ios -->
     <platform name="ios">
+        <hook src="hooks/iosBeforePrepareHook.js" type="before_prepare" />
+
         <js-module src="www/deeplink.js" name="deeplink">
             <runs/>
             <clobbers target="IonicDeeplink" />
