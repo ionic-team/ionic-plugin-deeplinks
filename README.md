@@ -33,6 +33,14 @@ Fill in the appropriate values as shown below:
 
 (New in 1.0.13): If you'd like to support multiple hosts for Android, you can also set the variables `DEEPLINK_2_SCHEME`, `DEEPLINK_2_HOST`, `ANDROID_2_PATH_PREFIX` and optionally substitue `2` with 3, 4, and 5 to set more.
 
+## Custom URL Scheme Format
+
+If you plan on using multi-level paths on a custom URL scheme link, you should use a placeholder host, like `app` in order to validate as a proper URL, for example:
+
+`myapp://app/path/to/page`
+
+`app` is a host filler. If you don't plan to use paths more than one level deep, then you can substitute in the path for `app`, like `instagram://camera`.
+
 ## Handling Deeplinks in JavaScript
 
 #### Ionic/Angular 2
