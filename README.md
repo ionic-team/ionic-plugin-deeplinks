@@ -154,3 +154,5 @@ Android supports Custom URL Scheme links, and as of Android 6.0 supports a simil
 
 Follow the App Links documentation on [Declaring Website Associations](https://developer.android.com/training/app-links/index.html#web-assoc) to enable your domain to
 deeplink to your Android app.
+
+Please note that Android 4.3 and earlier are not supported by this plugin, and will crash upon opening a deeplink.
