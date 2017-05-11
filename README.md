@@ -154,3 +154,9 @@ Android supports Custom URL Scheme links, and as of Android 6.0 supports a simil
 
 Follow the App Links documentation on [Declaring Website Associations](https://developer.android.com/training/app-links/index.html#web-assoc) to enable your domain to
 deeplink to your Android app.
+
+To prevent Android from creating multiple app instances when opening deeplinks, you can add the following preference in Cordova config.xml file:
+
+```xml
+ <preference name="AndroidLaunchMode" value="singleTask" />
+```
