@@ -2,7 +2,7 @@
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
     id="ionic-plugin-deeplinks"
-    version="1.0.14">
+    version="1.0.15">
     <name>Ionic Deeplink Plugin</name>
     <description>Ionic Deeplink Plugin</description>
     <license>MIT</license>
