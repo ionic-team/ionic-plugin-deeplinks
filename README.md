@@ -47,7 +47,7 @@ If you plan on using multi-level paths on a custom URL scheme link, you should u
 
 *note: make sure to call IonicDeeplink from a platform.ready or `deviceready` event*
 
-Using [Ionic Native](https://github.com/driftyco/ionic-native) (available in 1.2.4 or greater):
+Using [Ionic Native](https://github.com/ionic-team/ionic-native) (available in 1.2.4 or greater):
 
 ```javascript
 import {Deeplinks} from 'ionic-native';
@@ -67,7 +67,7 @@ Deeplinks.route({
 });
 ```
 
-If you're using Ionic 2, there is a convenience method to route automatically (see the simple [Ionic 2 Deeplinks](https://github.com/driftyco/ionic2-deeplinks-demo/blob/master/app/app.ts) demo for an example):
+If you're using Ionic 2, there is a convenience method to route automatically (see the simple [Ionic 2 Deeplinks](https://github.com/ionic-team/ionic2-deeplinks-demo/blob/master/app/app.ts) demo for an example):
 
 ```javascript
 Deeplinks.routeWithNavController(this.navController, {
@@ -87,7 +87,7 @@ because Ionic 1's navigation system won't properly build the navigation stack (t
 This is all fine because deeplinks should provide the user with a designed experience for what the back button
 should do, as we are putting them deep into the app and need to provide a natural way back to the main flow:
 
-(See a simple [demo](https://github.com/driftyco/ionic1-deeplinks-demo) of v1 deeplinking).
+(See a simple [demo](https://github.com/ionic-team/ionic1-deeplinks-demo) of v1 deeplinking).
 
 ```javascript
 angular.module('myApp', ['ionic', 'ionic.native'])
