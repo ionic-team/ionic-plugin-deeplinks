@@ -9,8 +9,8 @@
     ]
   },
   "description": "Ionic Deeplinks Plugin",
-  "repository": "https://github.com/driftyco/ionic-plugin-deeplinks.git",
-  "issue": "https://github.com/driftyco/ionic-plugin-deeplinks/issues",
+  "repository": "https://github.com/ionic-team/ionic-plugin-deeplinks.git",
+  "issue": "https://github.com/ionic-team/ionic-plugin-deeplinks/issues",
   "keywords": [
     "ionic",
     "cordova",
