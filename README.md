@@ -7,7 +7,7 @@ and Universal/App Links on iOS and Android.
 For example, you can have your app open through a link to https://yoursite.com/product/cool-beans and then navigate
 to display the Cool Beans in your app (cool beans!).
 
-Additionally, on Android iOS, your app can be opened through a custom URL scheme, like `coolbeans://app/product/cool-beans`.
+Additionally, on Android iOS, your app can be opened through a custom URL scheme, like `coolbeans://product/cool-beans`.
 
 Since Custom URL scheme behavior has changed quite a bit in iOS 9.2 for the case where the app isn't installed, you'll want to start using [Universal Links](#ios-configuration) as it's clear custom URL schemes are on the way out.
 
@@ -32,14 +32,6 @@ Fill in the appropriate values as shown below:
  * `ANDROID_PATH_PREFIX` - (optional): specify which path prefix our Android app should open from [more info](https://developer.android.com/guide/topics/manifest/data-element.html)
 
 (New in 1.0.13): If you'd like to support multiple hosts for Android, you can also set the variables `DEEPLINK_2_SCHEME`, `DEEPLINK_2_HOST`, `ANDROID_2_PATH_PREFIX` and optionally substitue `2` with 3, 4, and 5 to set more.
-
-## Custom URL Scheme Format
-
-If you plan on using multi-level paths on a custom URL scheme link, you should use a placeholder host, like `app` in order to validate as a proper URL, for example:
-
-`myapp://app/path/to/page`
-
-`app` is a host filler. If you don't plan to use paths more than one level deep, then you can substitute in the path for `app`, like `instagram://camera`.
 
 ## Handling Deeplinks in JavaScript
 
