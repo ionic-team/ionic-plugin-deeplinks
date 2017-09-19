@@ -42,7 +42,7 @@ Fill in the appropriate values as shown below:
 Using [Ionic Native](https://github.com/ionic-team/ionic-native) (available in 1.2.4 or greater):
 
 ```javascript
-import {Deeplinks} from 'ionic-native';
+import { Deeplinks } from 'ionic-native';
 
 Deeplinks.route({
   '/about-us': AboutPage,
@@ -65,9 +65,18 @@ If you're using Ionic 2, there is a convenience method to route automatically (s
 Deeplinks.routeWithNavController(this.navController, {
   '/about-us': AboutPage,
   '/products/:productId': ProductPage
+}).subscribe((match) => {
+  // match.$route - the route we matched, which is the matched entry from the arguments to route()
+  // match.$args - the args passed in the link
+  // match.$link - the full link data
+  console.log('Successfully matched route', match);
+}, (nomatch) => {
+  // nomatch.$link - the full link data
+  console.error('Got a deeplink that didn\'t match', nomatch);
 });
+```
 
-// Note: routeWithNavController also returns an observable you can also subscribe to for success/error in matching as in the first example
+// Note: routeWithNavController returns an observable from Ionic Native so it *must* be subscribed to first in order to trigger.
 ```
 
 #### Ionic/Angular 1
