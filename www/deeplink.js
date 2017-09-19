@@ -113,6 +113,10 @@ var IonicDeeplink = {
    * Check if the path matches the route.
    */
   routeMatch: function(route, path) {
+    if (route === path) {
+      return {};
+    }
+
     var parts = path.split('/');
     var routeParts = route.split('/');
 
@@ -128,7 +132,7 @@ var IonicDeeplink = {
     // Otherwise, we need to check each part
 
     var rp, pp;
-    for(var i in parts) {
+    for(var i = 0; i < parts.length; i++) {
       pp = parts[i];
       rp = routeParts[i];
 
@@ -187,14 +191,15 @@ var IonicDeeplink = {
       return data.host;
     }
 
-    var restOfUrl = data.url.slice(data.url.indexOf(data.host) + data.host.length);
+    var hostOrScheme = data.host || data.scheme + '://';
+    var restOfUrl = data.url.slice(data.url.indexOf(hostOrScheme) + hostOrScheme.length);
 
     if(restOfUrl.indexOf('?') > -1) {
       restOfUrl = restOfUrl.slice(0, restOfUrl.indexOf('?'));
     }
 
     if(restOfUrl.indexOf('#') > -1) {
-      restOfUrl = restOfUrl.slice(0)
+      restOfUrl = restOfUrl.slice(0);
     }
 
     return restOfUrl;
