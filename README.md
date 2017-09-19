@@ -74,7 +74,6 @@ Deeplinks.routeWithNavController(this.navController, {
   // nomatch.$link - the full link data
   console.error('Got a deeplink that didn\'t match', nomatch);
 });
-```
 
 // Note: routeWithNavController returns an observable from Ionic Native so it *must* be subscribed to first in order to trigger.
 ```
