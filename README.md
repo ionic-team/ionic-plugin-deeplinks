@@ -1,3 +1,8 @@
+# NO LONGER MAINTAINED
+
+This plugin is not being maintained by the Ionic team. we recommend using Branch metrics for handling deeplinks: [https://github.com/BranchMetrics/cordova-ionic-phonegap-branch-deep-linking](https://github.com/BranchMetrics/cordova-ionic-phonegap-branch-deep-linking)
+
+
 Ionic Deeplinks Plugin
 ======
 
