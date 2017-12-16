@@ -1,7 +1,10 @@
 # NO LONGER MAINTAINED
 
-This plugin is not being maintained by the Ionic team. we recommend using Branch metrics for handling deeplinks: [https://github.com/BranchMetrics/cordova-ionic-phonegap-branch-deep-linking](https://github.com/BranchMetrics/cordova-ionic-phonegap-branch-deep-linking)
+This plugin is **not being maintained by the Ionic team** anymore. 
 
+We recommend using Branch metrics for handling deeplinks (= universal links): [https://github.com/BranchMetrics/cordova-ionic-phonegap-branch-deep-linking](https://github.com/BranchMetrics/cordova-ionic-phonegap-branch-deep-linking)
+
+If you used to handle URI scheme with the help of this plugin too, we recommend the use of the plugin Custom-URL-scheme: [https://github.com/EddyVerbruggen/Custom-URL-scheme](https://github.com/EddyVerbruggen/Custom-URL-scheme)  
 
 Ionic Deeplinks Plugin
 ======
