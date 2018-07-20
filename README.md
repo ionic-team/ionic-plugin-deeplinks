@@ -4,6 +4,7 @@ This plugin is being maintained by the Ionic community. Interested in helping? M
 
 Another great solution for deep links for Ionic is the Branch Metrics plugin: [https://github.com/BranchMetrics/cordova-ionic-phonegap-branch-deep-linking](https://github.com/BranchMetrics/cordova-ionic-phonegap-branch-deep-linking)
 
+If you used to handle URI schemes with the help of this plugin and have migrated to Branch Metrics, you can make use of a plugin such as [https://github.com/EddyVerbruggen/Custom-URL-scheme](https://github.com/EddyVerbruggen/Custom-URL-scheme) to facilitate custom URL schemes.
 
 Ionic Deeplinks Plugin
 ======
