@@ -91,6 +91,8 @@
         <source-file src="src/ios/AppDelegate+IonicDeeplink.m" />
         <header-file src="src/ios/IonicDeeplinkPlugin.h" />
         <source-file src="src/ios/IonicDeeplinkPlugin.m" />
+        <header-file src="src/ios/DeeplinkService.h" />
+        <source-file src="src/ios/DeeplinkService.m" />
     </platform>
 
     <platform name="browser">
