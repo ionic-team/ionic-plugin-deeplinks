@@ -1,6 +1,7 @@
 #import "IonicDeeplinkPlugin.h"
 
 #import <Cordova/CDVAvailability.h>
+@import CoreNFC;
 
 @implementation IonicDeeplinkPlugin
 
@@ -52,6 +53,12 @@
   }
 
   NSURL *url = userActivity.webpageURL;
+
+  if (@available(iOS 12.0, *)) {
+    NSURL *urlFromNFC = [self handleNDEF: userActivity.ndefMessagePayload];
+    url = (url) ? url : urlFromNFC;
+  }
+
   _lastEvent = [self createResult:url];
   NSLog(@"IonicDeepLinkPlugin: Handle continueUserActivity (internal) %@", url);
 
@@ -90,6 +97,28 @@
   return result;
 }
 
+- (NSURL *)handleNDEF:(NFCNDEFMessage *)ndef  API_AVAILABLE(ios(11.0)){
+  if ((ndef == nil) &&
+      (ndef.records.count == 0)) {
+    return nil;
+  }
+
+  for (NFCNDEFPayload *record in ndef.records){
+    if ((record.typeNameFormat == NFCTypeNameFormatAbsoluteURI) ||
+        ((record.typeNameFormat == NFCTypeNameFormatNFCWellKnown) &&
+         ([record.type isEqualToData:[@"U" dataUsingEncoding:NSUTF8StringEncoding]]))) {
+          NSString *header = [self parseHeader:record.payload];
+          NSString *remainder = [[NSString alloc] initWithData:
+                                 [record.payload subdataWithRange:
+                                  NSMakeRange(1, record.payload.length-1)]
+                                                      encoding:NSUTF8StringEncoding];
+          NSString *urlString = [NSString stringWithFormat:@"%@%@", header, remainder];
+          return [[NSURL alloc] initWithString:urlString];
+        }
+  }
+  return nil;
+}
+
 - (void)getHardwareInfo:(CDVInvokedUrlCommand *)command {
   NSMutableDictionary *info = [[NSMutableDictionary alloc] init];
 
@@ -118,6 +147,53 @@
 
   CDVPluginResult *result = [CDVPluginResult resultWithStatus:CDVCommandStatus_OK messageAsDictionary:info];
   [self.commandDelegate sendPluginResult:result callbackId:command.callbackId];
+}
+
+- (NSString *)parseHeader:(NSData *)payload {
+  NSArray *protocols = @[
+                     @"",
+                     @"http://www.",
+                     @"https://www.",
+                     @"http://",
+                     @"https://",
+                     @"tel:",
+                     @"mailto:",
+                     @"ftp://anonymous:anonymous@",
+                     @"ftp://ftp.",
+                     @"ftps://",
+                     @"sftp://",
+                     @"smb://",
+                     @"nfs://",
+                     @"ftp://",
+                     @"dav://",
+                     @"news:",
+                     @"telnet://",
+                     @"imap:",
+                     @"rtsp://",
+                     @"urn:",
+                     @"pop:",
+                     @"sip:",
+                     @"sips:",
+                     @"tftp:",
+                     @"btspp://",
+                     @"btl2cap://",
+                     @"btgoep://",
+                     @"tcpobex://",
+                     @"irdaobex://",
+                     @"file://",
+                     @"urn:epc:id:",
+                     @"urn:epc:tag:",
+                     @"urn:epc:pat:",
+                     @"urn:epc:raw:",
+                     @"urn:epc:",
+                     @"urn:nfc:"
+                     ];
+  const unsigned char* bytes = [payload bytes];
+  NSString *header = protocols[bytes[0]];
+  if (header == nil){
+    return @"";
+  }
+  return header;
 }
 
 @end
