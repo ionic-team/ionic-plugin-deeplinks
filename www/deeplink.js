@@ -1,7 +1,7 @@
 
 var argscheck = require('cordova/argscheck'),
-    utils = require('cordova/utils'),
-    exec = require('cordova/exec');
+    utils 		= require('cordova/utils'),
+    exec 			= require('cordova/exec');
 
 var PLUGIN_NAME = 'IonicDeeplinkPlugin';
 
@@ -37,19 +37,28 @@ var IonicDeeplink = {
     this.paths = paths;
 
     this.onDeepLink(function(data) {
-      console.log('On deep link', data);
-      var realPath, pathData, matchedParams, args, finalArgs, didRoute;
+      console.log(`On deep link: ${JSON.stringify(data)}`);
 
-      realPath = self._getRealPath(data);
-      args = self._queryToObject(data.url)
+      var didRoute = false;
+
+      var realPath = self._getRealPath(data);
+			console.log(`realPath: ${realPath}`);
+
+			var args = self._queryToObject(data.queryString);
+			console.log(`args: ${JSON.stringify(args)}`);
+
+			console.log('--- About to launch into path loop check ---');
 
       for(var targetPath in paths) {
-        pathData = paths[targetPath];
+        var pathData = paths[targetPath];
+				console.log(`pathData: ${JSON.stringify(pathData)}`);
 
-        matchedParams = self.routeMatch(targetPath, realPath);
+        var matchedParams = self.routeMatch(targetPath, realPath);
 
         if(matchedParams !== false) {
-          finalArgs = extend({}, matchedParams, args);
+					console.log('match found!');
+
+          var finalArgs = extend({}, matchedParams, args);
 
           if(typeof(success) === 'function') {
             success({
@@ -63,7 +72,9 @@ var IonicDeeplink = {
         }
       }
 
-      if(!didRoute) {
+      if (!didRoute) {
+				console.log('NO match found!');
+
         if(typeof(error) === 'function') {
           error({
             $link: data
@@ -149,25 +160,42 @@ var IonicDeeplink = {
   },
 
   _queryToObject: function(q) {
-    if(!q) return {};
+		console.log(`IonicDeepLinks._queryToObject(${q})`);
 
-    var qIndex = q.lastIndexOf('?');
-    if(qIndex < 0) return {};
+		if (!q) return {};
 
-    // Get everything after the ?
-    q = q.slice(q.lastIndexOf('?') + 1);
+    var qIndex = q.indexOf('?');
 
-    var i = 0, retObj = {}, pair = null,
-      qArr = q.split('&');
+		if (qIndex > -1) {
+			q = q.slice(qIndex + 1);
+		}
+
+    var i 			= 0,
+				retObj 	= {},
+				pair 		= null,
+      	qArr 		= q.split('&');
 
     for (; i < qArr.length; i++) {
-      if(!qArr[i]) { continue; }
-      pair = qArr[i].split('=');
+      if (!qArr[i]) {
+				continue;
+			}
+
+			pair = qArr[i].split('=');
       retObj[pair[0]] = pair[1];
     };
 
     return retObj;
   },
+
+	_stripFragmentLeadingHash: function(fragment) {
+		var hs = fragment.indexOf('#');
+
+		if (hs > -1) {
+			fragment.slice(0, hs);
+		}
+
+		return fragment;
+	},
 
   /**
    * We're fairly flexible when it comes to matching a URL. We support
@@ -177,31 +205,72 @@ var IonicDeeplink = {
    * This method tries to infer what the proper "path" is from the URL
    */
   _getRealPath: function(data) {
-    // If we have a fragment, we use that as the path
-    if(data.fragment) {
-      var fi = data.fragment.indexOf('?');
-      if(fi > -1) {
-        return data.fragment.slice(0, fi).slice(1);
-      }
-      return data.fragment.slice(1);
+    console.log('IonicDeepLinks._getRealPath()');
+
+		// 1. Let's just do the obvious and return the parsed 'path' first, if available.
+		if (!!data.path && data.path !== "") {
+			console.log(`data.path being used: ${data.path}`);
+			return data.path;
+		}
+
+		// 2. Now, are we using a non-standard scheme?
+		var isCustomScheme = data.scheme.indexOf('http') === -1;
+
+		// 3. Nope so we'll go fragment first if available as that should be what comes after
+		if (!isCustomScheme) {
+			if (!!data.fragment) {
+				console.log(`data.fragment being used with standard url scheme: ${data.fragment}`);
+				return self._stripFragmentLeadingHash(data.fragment);
+			}
+		}
+
+		// 4. Now fall back to host / authority
+		if (!!data.host) {
+			if(data.host.charAt(0) != '/') {
+				data.host = '/' + data.host;
+			}
+
+			console.log(`data.host being used: ${data.host}`);
+			return data.host;
+		}
+
+		// 5. We'll use fragment next if we're in a custom scheme, though this might need a little more thought
+		if (isCustomScheme && !!data.fragment) {
+			var hs = data.fragment.indexOf('#');
+
+			if (hs > -1) {
+				return data.fragment.slice(0, hs);
+			}
+
+			console.log(`data.fragment being used with custom scheme: ${data.fragment}`);
+			return data.fragment;
+		}
+
+		// 6. Last resort - no obvious path, fragment or host, so we
+		// slice out the scheme and any query string or fragment from the full url.
+		var restOfUrl = data.url;
+		var separator = data.url.indexOf('://');
+
+		if (separator !== -1) {
+			restOfUrl = data.url.slice(separator + 3);
+		} else {
+			separator = data.url.indexOf(':/');
+			if (separator !== -1) {
+				restOfUrl = data.url.slice(separator + 2);
+			}
+		}
+
+		var qs = restOfUrl.indexOf('?');
+	  if (qs > -1) {
+      restOfUrl = restOfUrl.slice(0, qs);
     }
 
-    if(!data.path) {
-      if(data.host.charAt(0) != '/') data.host = '/' + data.host;
-      return data.host;
+		var hs = restOfUrl.indexOf('#');
+ 		if (hs > -1) {
+      restOfUrl = restOfUrl.slice(0, hs);
     }
 
-    var hostOrScheme = data.host || data.scheme + '://';
-    var restOfUrl = data.url.slice(data.url.indexOf(hostOrScheme) + hostOrScheme.length);
-
-    if(restOfUrl.indexOf('?') > -1) {
-      restOfUrl = restOfUrl.slice(0, restOfUrl.indexOf('?'));
-    }
-
-    if(restOfUrl.indexOf('#') > -1) {
-      restOfUrl = restOfUrl.slice(0);
-    }
-
+		console.log('Last resort path finding: ' + restOfUrl);
     return restOfUrl;
   },
 
