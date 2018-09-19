@@ -47,33 +47,43 @@ var IonicDeeplink = {
       var args = self._queryToObject(data.queryString);
       console.log(`args: ${JSON.stringify(args)}`);
 
+			var matched 	= false;
+			var finalArgs = {};
+
       for (var targetPath in paths) {
-        var pathData = paths[targetPath];
+				if (matched === true) {
+					console.log('Route already matched!');
+
+					return;
+				}
+
+				var pathData = paths[targetPath];
         console.log(`checking ${targetPath} - pathData: ${JSON.stringify(pathData)}`);
 
         var matchedParams = self.routeMatch(targetPath, realPath);
 				console.log(`matchedParams: ${matchedParams}`);
 
-				if (matchedParams === false) {
-					console.log('No match found!');
-
-					if (typepf(error) === 'function') {
-						error({ $link: data });
-					}
-
-					return;
+				if (matchedParams !== false) {
+					matched   = true;
+					finalArgs = extend({}, matchedParams, args);
 				}
+			}
 
-        var finalArgs = extend({}, matchedParams, args);
-
-				if (typepf(success) === 'function') {
+			if (matched === true) {
+				if (typeof(success) === 'function') {
 					success({
-        		$route: pathData,
-          	$args: finalArgs,
-          	$link: data
-        	});
+						$route: pathData,
+						$args: finalArgs,
+						$link: data
+					});
 				}
-      }
+
+				return;
+			}
+
+			if (typeof(error) === 'function') {
+				error({ $link: data });
+			}
     })
   },
 
