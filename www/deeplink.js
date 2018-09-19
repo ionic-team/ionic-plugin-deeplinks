@@ -36,13 +36,10 @@ var IonicDeeplink = {
   },
   route: function (paths, success, error) {
     var self = this;
-
     this.paths = paths;
 
     this.onDeepLink(function (data) {
       console.log(`On deep link: ${JSON.stringify(data)}`);
-
-      var didRoute = false;
 
       var realPath = self._getRealPath(data);
       console.log(`realPath: ${realPath}`);
@@ -50,39 +47,32 @@ var IonicDeeplink = {
       var args = self._queryToObject(data.queryString);
       console.log(`args: ${JSON.stringify(args)}`);
 
-      console.log('--- About to launch into path loop check ---');
-
       for (var targetPath in paths) {
         var pathData = paths[targetPath];
-        console.log(`pathData: ${JSON.stringify(pathData)}`);
+        console.log(`checking ${targetPath} - pathData: ${JSON.stringify(pathData)}`);
 
         var matchedParams = self.routeMatch(targetPath, realPath);
+				console.log(`matchedParams: ${matchedParams}`);
 
-        if (matchedParams !== false) {
-          console.log('match found!');
+				if (matchedParams === false) {
+					console.log('No match found!');
 
-          var finalArgs = extend({}, matchedParams, args);
+					if (typepf(error) === 'function') {
+						error({ $link: data });
+					}
 
-          if (typeof (success) === 'function') {
-            success({
-              $route: pathData,
-              $args: finalArgs,
-              $link: data,
-            });
-          }
+					return;
+				}
 
-          didRoute = true;
-        }
-      }
+        var finalArgs = extend({}, matchedParams, args);
 
-      if (!didRoute) {
-        console.log('NO match found!');
-
-        if (typeof (error) === 'function') {
-          error({
-            $link: data,
-          });
-        }
+				if (typepf(success) === 'function') {
+					success({
+        		$route: pathData,
+          	$args: finalArgs,
+          	$link: data
+        	});
+				}
       }
     })
   },
