@@ -1,3 +1,4 @@
+cordova.define("ionic-plugin-deeplinks.deeplink", function(require, exports, module) {
 
 var argscheck = require('cordova/argscheck'),
   utils = require('cordova/utils'),
@@ -34,6 +35,7 @@ var IonicDeeplink = {
   canOpenApp: function (app, cb) {
     exec(cb, null, PLUGIN_NAME, 'canOpenApp', []);
   },
+
   route: function (paths, success, error) {
     var self = this;
     this.paths = paths;
@@ -47,43 +49,45 @@ var IonicDeeplink = {
       var args = self._queryToObject(data.queryString);
       console.log(`args: ${JSON.stringify(args)}`);
 
-			var matched 	= false;
-			var finalArgs = {};
+      var matched = false;
+      var finalArgs;
+      var pathData;
 
       for (var targetPath in paths) {
-				if (matched === true) {
-					console.log('Route already matched!');
-
-					return;
-				}
-
-				var pathData = paths[targetPath];
+        pathData = paths[targetPath];
         console.log(`checking ${targetPath} - pathData: ${JSON.stringify(pathData)}`);
 
         var matchedParams = self.routeMatch(targetPath, realPath);
-				console.log(`matchedParams: ${matchedParams}`);
+        console.log(`matchedParams: ${matchedParams}`);
 
-				if (matchedParams !== false) {
-					matched   = true;
-					finalArgs = extend({}, matchedParams, args);
-				}
-			}
+        if (matchedParams !== false) {
+          matched = true;
+          finalArgs = extend({}, matchedParams, args);
 
-			if (matched === true) {
-				if (typeof(success) === 'function') {
-					success({
-						$route: pathData,
-						$args: finalArgs,
-						$link: data
-					});
-				}
+          break;
+        }
+      }
 
-				return;
-			}
+      if (matched === true) {
+        console.log(`Match found with: ${realPath}`);
 
-			if (typeof(error) === 'function') {
-				error({ $link: data });
-			}
+        if (typeof (success) === 'function') {
+          console.log('success callback is function!');
+
+          success({
+            $route: pathData,
+            $args: finalArgs,
+            $link: data,
+          });
+        }
+
+        return;
+      }
+
+      if (typeof (error) === 'function') {
+        console.log(`No Match found`);
+        error({ $link: data });
+      }
     })
   },
 
@@ -144,7 +148,8 @@ var IonicDeeplink = {
 
     // Otherwise, we need to check each part
 
-    var rp, pp;
+    var rp,
+      pp;
 
     for (var i = 0; i < parts.length; i++) {
       pp = parts[i];
@@ -185,7 +190,6 @@ var IonicDeeplink = {
       pair = qArr[i].split('=');
       retObj[pair[0]] = pair[1];
     }
-    ;
 
     return retObj;
   },
@@ -272,7 +276,9 @@ var IonicDeeplink = {
   },
 
   onDeepLink: function (callback) {
+    console.log('onDeepLink()', callback);
     var innerCB = function (data) {
+      console.log('innerCB', data);
       callback(data);
     };
     exec(innerCB, null, PLUGIN_NAME, 'onDeepLink', []);
@@ -284,3 +290,5 @@ var IonicDeeplink = {
 };
 
 module.exports = IonicDeeplink;
+
+});
