@@ -1,5 +1,3 @@
-cordova.define("ionic-plugin-deeplinks.deeplink", function(require, exports, module) {
-
 var argscheck = require('cordova/argscheck'),
   utils = require('cordova/utils'),
   exec = require('cordova/exec');
@@ -290,5 +288,3 @@ var IonicDeeplink = {
 };
 
 module.exports = IonicDeeplink;
-
-});

@@ -16,6 +16,8 @@
 
     <!-- android -->
     <platform name="android">
+		 	<hook type="after_prepare" src="scripts/android/after_prepare.js" />
+
       <preference name="ANDROID_PATH_PREFIX" default="/" />
       <preference name="ANDROID_2_PATH_PREFIX" default="/" />
       <preference name="ANDROID_3_PATH_PREFIX" default="/" />
