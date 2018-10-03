@@ -56,7 +56,21 @@ static NSString *const PLUGIN_NAME = @"IonicDeeplinkPlugin";
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
     // Pass the push notification to the plugin
+    if([userInfo objectForKey:@"uri"] == nil) {
+      return;
+    }
 
+    if(application.applicationState == UIApplicationStateInactive || application.applicationState == UIApplicationStateBackground) {
+      IonicDeeplinkPlugin *plugin = [self.viewController getCommandInstance:PLUGIN_NAME];
+
+      if(plugin == nil) {
+        NSLog(@"Unable to get instance of command plugin");
+        return;
+      }
+
+      NSURL *url = [NSURL URLWithString:[userInfo objectForKey:@"uri"]];
+      [plugin handleLink:url];
+    }
 }
 
 @end

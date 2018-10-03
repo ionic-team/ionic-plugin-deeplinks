@@ -1,9 +1,30 @@
+function parseSchemeFromUrl (url) {
+	var _sep = url.indexOf(':');
+	if (_sep > -1) {
+		return url.slice(0, _sep + 1);
+	}
+
+	return undefined;
+}
+
+function parseQueryStringFromUrl(url) {
+	var qs = url.indexOf('?');
+
+	if (qs > -1) {
+		return url.slice(qs + 1);
+	}
+
+	return undefined;
+}
+
 function locationToData(l) {
   return {
     url: l.href,
     path: l.pathname,
     host: l.hostname,
-    fragment: l.hash
+    fragment: l.hash,
+		scheme: parseSchemeFromUrl(l.href),
+		queryString: parseQueryStringFromUrl(l.href)
   }
 }
 
