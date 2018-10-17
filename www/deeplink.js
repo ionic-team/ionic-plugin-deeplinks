@@ -39,13 +39,9 @@ var IonicDeeplink = {
     this.paths = paths;
 
     this.onDeepLink(function (data) {
-      console.log(`On deep link: ${JSON.stringify(data)}`);
-
       var realPath = self._getRealPath(data);
-      console.log(`realPath: ${realPath}`);
 
       var args = self._queryToObject(data.queryString);
-      console.log(`args: ${JSON.stringify(args)}`);
 
       var matched = false;
       var finalArgs;
@@ -53,10 +49,8 @@ var IonicDeeplink = {
 
       for (var targetPath in paths) {
         pathData = paths[targetPath];
-        console.log(`checking ${targetPath} - pathData: ${JSON.stringify(pathData)}`);
 
         var matchedParams = self.routeMatch(targetPath, realPath);
-        console.log(`matchedParams: ${matchedParams}`);
 
         if (matchedParams !== false) {
           matched = true;
@@ -67,11 +61,9 @@ var IonicDeeplink = {
       }
 
       if (matched === true) {
-        console.log(`Match found with: ${realPath}`);
+        console.log('Match found', realPath);
 
         if (typeof (success) === 'function') {
-          console.log('success callback is function!');
-
           success({
             $route: pathData,
             $args: finalArgs,
@@ -83,7 +75,7 @@ var IonicDeeplink = {
       }
 
       if (typeof (error) === 'function') {
-        console.log(`No Match found`);
+        console.log('No Match found');
         error({ $link: data });
       }
     })
@@ -165,8 +157,6 @@ var IonicDeeplink = {
   },
 
   _queryToObject: function (q) {
-    console.log(`IonicDeepLinks._queryToObject(${q})`);
-
     if (!q) return {};
 
     var qIndex = q.indexOf('?');
@@ -210,11 +200,9 @@ var IonicDeeplink = {
    * This method tries to infer what the proper "path" is from the URL
    */
   _getRealPath: function (data) {
-    console.log('IonicDeepLinks._getRealPath()');
 
     // 1. Let's just do the obvious and return the parsed 'path' first, if available.
     if (!!data.path && data.path !== "") {
-      console.log(`data.path being used: ${data.path}`);
       return data.path;
     }
 
@@ -224,7 +212,6 @@ var IonicDeeplink = {
     // 3. Nope so we'll go fragment first if available as that should be what comes after
     if (!isCustomScheme) {
       if (!!data.fragment) {
-        console.log(`data.fragment being used with standard url scheme: ${data.fragment}`);
         return self._stripFragmentLeadingHash(data.fragment);
       }
     }
@@ -235,13 +222,11 @@ var IonicDeeplink = {
         data.host = '/' + data.host;
       }
 
-      console.log(`data.host being used: ${data.host}`);
       return data.host;
     }
 
     // 5. We'll use fragment next if we're in a custom scheme, though this might need a little more thought
     if (isCustomScheme && !!data.fragment) {
-      console.log(`data.fragment being used with custom scheme: ${data.fragment}`);
       return self._stripFragmentLeadingHash(data.fragment);
     }
 
@@ -269,14 +254,11 @@ var IonicDeeplink = {
       restOfUrl = restOfUrl.slice(0, hs);
     }
 
-    console.log('Last resort path finding: ' + restOfUrl);
     return restOfUrl;
   },
 
   onDeepLink: function (callback) {
-    console.log('onDeepLink()', callback);
     var innerCB = function (data) {
-      console.log('innerCB', data);
       callback(data);
     };
     exec(innerCB, null, PLUGIN_NAME, 'onDeepLink', []);
