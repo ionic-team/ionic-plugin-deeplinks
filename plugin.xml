@@ -91,6 +91,10 @@
         <source-file src="src/ios/AppDelegate+IonicDeeplink.m" />
         <header-file src="src/ios/IonicDeeplinkPlugin.h" />
         <source-file src="src/ios/IonicDeeplinkPlugin.m" />
+
+        <preference name="URL_SCHEME" value="$URL_SCHEME" />
+        <preference name="DEEPLINK_SCHEME" value="$DEEPLINK_SCHEME" />
+        <preference name="DEEPLINK_HOST" value="$DEEPLINK_HOST" />
     </platform>
 
     <platform name="browser">
