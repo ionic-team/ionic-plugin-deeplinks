@@ -9,7 +9,7 @@ static NSString *const PLUGIN_NAME = @"IonicDeeplinkPlugin";
  */
 @interface AppDelegate (IonicDeeplinkPlugin)
 
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation;
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options;
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray * _Nullable))restorationHandler;
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo;
 
@@ -17,12 +17,16 @@ static NSString *const PLUGIN_NAME = @"IonicDeeplinkPlugin";
 
 @implementation AppDelegate (IonicDeeplinkPlugin)
 
-- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options {
     IonicDeeplinkPlugin *plugin = [self.viewController getCommandInstance:PLUGIN_NAME];
 
     if(plugin == nil) {
       NSLog(@"Unable to get instance of command plugin");
       return NO;
+    }
+
+    if (!url) {
+        return NO;
     }
 
     BOOL handled = [plugin handleLink:url];
