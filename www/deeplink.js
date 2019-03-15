@@ -187,7 +187,7 @@ var IonicDeeplink = {
     }
 
     if(!data.path) {
-      if(data.host.charAt(0) != '/') data.host = '/' + data.host;
+      if(data.host.charAt(0) !== '/') data.host = '/' + data.host;
       return data.host;
     }
 
@@ -202,7 +202,7 @@ var IonicDeeplink = {
       restOfUrl = restOfUrl.slice(0);
     }
 
-    return restOfUrl;
+    return (data.host.charAt(0) !== '/' ? ('/' + data.host) : data.host) + restOfUrl;
   },
 
   onDeepLink: function(callback) {
