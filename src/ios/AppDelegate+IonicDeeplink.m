@@ -9,6 +9,7 @@ static NSString *const PLUGIN_NAME = @"IonicDeeplinkPlugin";
  */
 @interface AppDelegate (IonicDeeplinkPlugin)
 
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey, id> *)options;
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation;
 - (BOOL)application:(UIApplication *)application continueUserActivity:(NSUserActivity *)userActivity restorationHandler:(void (^)(NSArray * _Nullable))restorationHandler;
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo;
@@ -16,6 +17,21 @@ static NSString *const PLUGIN_NAME = @"IonicDeeplinkPlugin";
 @end
 
 @implementation AppDelegate (IonicDeeplinkPlugin)
+
+- (BOOL)application:(UIApplication *)app openURL:(NSURL *)url options:(NSDictionary<UIApplicationOpenURLOptionsKey,id> *)options {
+    NSMutableString *sourceApp = [[NSMutableString alloc] init];
+    NSMutableString *annotation = [[NSMutableString alloc] init];
+    
+    if([options objectForKey:UIApplicationOpenURLOptionsSourceApplicationKey]) {
+        sourceApp = [options objectForKey:UIApplicationOpenURLOptionsSourceApplicationKey];
+    }
+
+    if([options objectForKey:UIApplicationOpenURLOptionsAnnotationKey]) {
+        annotation = [options objectForKey:UIApplicationOpenURLOptionsAnnotationKey];
+    }
+
+    return [self application:app openURL:url sourceApplication:sourceApp annotation:annotation];
+}
 
 - (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
     IonicDeeplinkPlugin *plugin = [self.viewController getCommandInstance:PLUGIN_NAME];
@@ -29,7 +45,20 @@ static NSString *const PLUGIN_NAME = @"IonicDeeplinkPlugin";
 
     if(!handled) {
       // Pass event through to Cordova
+      NSMutableDictionary * openURLData = [[NSMutableDictionary alloc] init];
+
+      [openURLData setValue:url forKey:@"url"];
+
+      if (sourceApplication) {
+          [openURLData setValue:sourceApplication forKey:@"sourceApplication"];
+      }
+
+      if (annotation) {
+          [openURLData setValue:annotation forKey:@"annotation"];
+      }
+
       [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:CDVPluginHandleOpenURLNotification object:url]];
+      [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:CDVPluginHandleOpenURLWithAppSourceAndAnnotationNotification object:openURLData]];
 
       // Send notice to the rest of our plugin that we didn't handle this URL
       [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:@"IonicLinksUnhandledURL" object:[url absoluteString]]];
