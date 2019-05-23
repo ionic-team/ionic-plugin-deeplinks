@@ -57,7 +57,7 @@ static NSString *const PLUGIN_NAME = @"IonicDeeplinkPlugin";
           [openURLData setValue:annotation forKey:@"annotation"];
       }
 
-      [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:CDVPluginHandleOpenURLNotification object:url]];
+      // [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:CDVPluginHandleOpenURLNotification object:url]];
       [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:CDVPluginHandleOpenURLWithAppSourceAndAnnotationNotification object:openURLData]];
 
       // Send notice to the rest of our plugin that we didn't handle this URL
