@@ -1,5 +1,6 @@
 #import "AppDelegate.h"
 #import "IonicDeeplinkPlugin.h"
+#import "DeeplinkService.h"
 
 static NSString *const PLUGIN_NAME = @"IonicDeeplinkPlugin";
 
@@ -37,6 +38,7 @@ static NSString *const PLUGIN_NAME = @"IonicDeeplinkPlugin";
     IonicDeeplinkPlugin *plugin = [self.viewController getCommandInstance:PLUGIN_NAME];
 
     if(plugin == nil) {
+      [DeeplinkService setLastURL:url];
       NSLog(@"Unable to get instance of command plugin");
       return NO;
     }
@@ -72,6 +74,7 @@ static NSString *const PLUGIN_NAME = @"IonicDeeplinkPlugin";
     IonicDeeplinkPlugin *plugin = [self.viewController getCommandInstance:PLUGIN_NAME];
 
     if(plugin == nil) {
+      [DeeplinkService setLastUserActivity:userActivity];
       return NO;
     }
 
