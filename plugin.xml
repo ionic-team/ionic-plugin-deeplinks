@@ -1,108 +1,106 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-    id="ionic-plugin-deeplinks"
-    version="1.0.19">
-    <name>Ionic Deeplink Plugin</name>
-    <description>Ionic Deeplink Plugin</description>
-    <license>MIT</license>
-    <keywords>Ionic,deeplinks,deeplinking</keywords>
-    <repo>https://github.com/ionic-team/ionic-plugin-deeplink.git</repo>
-    <issue>https://github.com/ionic-team/ionic-plugin-deeplink/issues</issue>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0" id="ionic-plugin-deeplinks" version="1.0.20">
+	<name>Ionic Deeplink Plugin</name>
+	<description>Ionic Deeplink Plugin</description>
+	<license>MIT</license>
+	<keywords>Ionic,deeplinks,deeplinking</keywords>
+	<repo>https://github.com/ionic-team/ionic-plugin-deeplink.git</repo>
+	<issue>https://github.com/ionic-team/ionic-plugin-deeplink/issues</issue>
 
-    <preference name="URL_SCHEME" />
-    <preference name="DEEPLINK_SCHEME" default="https" />
-    <preference name="DEEPLINK_HOST" default="" />
+	<preference name="URL_SCHEME" />
+	<preference name="DEEPLINK_SCHEME" default="https" />
+	<preference name="DEEPLINK_HOST" default="" />
 
-    <!-- android -->
-    <platform name="android">
-		 	<preference name="ANDROID_PATH_PREFIX" default="/" />
-      <preference name="ANDROID_2_PATH_PREFIX" default="/" />
-      <preference name="ANDROID_3_PATH_PREFIX" default="/" />
-      <preference name="ANDROID_4_PATH_PREFIX" default="/" />
-      <preference name="ANDROID_5_PATH_PREFIX" default="/" />
+	<!-- android -->
+	<platform name="android">
+		<preference name="ANDROID_PATH_PREFIX" default="/" />
+		<preference name="ANDROID_2_PATH_PREFIX" default="/" />
+		<preference name="ANDROID_3_PATH_PREFIX" default="/" />
+		<preference name="ANDROID_4_PATH_PREFIX" default="/" />
+		<preference name="ANDROID_5_PATH_PREFIX" default="/" />
 
-      <preference name="DEEPLINK_2_SCHEME" default=" " />
-      <preference name="DEEPLINK_2_HOST" default=" " />
-      <preference name="DEEPLINK_3_SCHEME" default=" " />
-      <preference name="DEEPLINK_3_HOST" default=" " />
-      <preference name="DEEPLINK_4_SCHEME" default=" " />
-      <preference name="DEEPLINK_4_HOST" default=" " />
-      <preference name="DEEPLINK_5_SCHEME" default=" " />
-      <preference name="DEEPLINK_5_HOST" default=" " />
+		<preference name="DEEPLINK_2_SCHEME" default=" " />
+		<preference name="DEEPLINK_2_HOST" default=" " />
+		<preference name="DEEPLINK_3_SCHEME" default=" " />
+		<preference name="DEEPLINK_3_HOST" default=" " />
+		<preference name="DEEPLINK_4_SCHEME" default=" " />
+		<preference name="DEEPLINK_4_HOST" default=" " />
+		<preference name="DEEPLINK_5_SCHEME" default=" " />
+		<preference name="DEEPLINK_5_HOST" default=" " />
 
-      <js-module src="www/deeplink.js" name="deeplink">
-        <runs/>
-        <clobbers target="IonicDeeplink" />
-      </js-module>
-      <config-file target="res/xml/config.xml" parent="/*">
-        <feature name="IonicDeeplinkPlugin">
-          <param name="android-package" value="io.ionic.links.IonicDeeplink" />
-          <param name="onload" value="true" />
-        </feature>
-      </config-file>
+		<js-module src="www/deeplink.js" name="deeplink">
+			<runs/>
+			<clobbers target="IonicDeeplink" />
+		</js-module>
+		<config-file target="res/xml/config.xml" parent="/*">
+			<feature name="IonicDeeplinkPlugin">
+				<param name="android-package" value="io.ionic.links.IonicDeeplink" />
+				<param name="onload" value="true" />
+			</feature>
+		</config-file>
 
 
-      <config-file target="AndroidManifest.xml" parent="/manifest/application/activity">
-        <intent-filter>
-          <action android:name="android.intent.action.VIEW" />
-          <category android:name="android.intent.category.DEFAULT" />
-          <category android:name="android.intent.category.BROWSABLE" />
-          <data android:scheme="$URL_SCHEME" />
-        </intent-filter>
-        <intent-filter android:autoVerify="true">
-          <action android:name="android.intent.action.VIEW" />
-          <category android:name="android.intent.category.DEFAULT" />
-          <category android:name="android.intent.category.BROWSABLE" />
-          <data android:scheme="$DEEPLINK_SCHEME" android:host="$DEEPLINK_HOST" android:pathPrefix="$ANDROID_PATH_PREFIX" />
-          <data android:scheme="$DEEPLINK_2_SCHEME" android:host="$DEEPLINK_2_HOST" android:pathPrefix="$ANDROID_2_PATH_PREFIX" />
-          <data android:scheme="$DEEPLINK_3_SCHEME" android:host="$DEEPLINK_3_HOST" android:pathPrefix="$ANDROID_3_PATH_PREFIX" />
-          <data android:scheme="$DEEPLINK_4_SCHEME" android:host="$DEEPLINK_4_HOST" android:pathPrefix="$ANDROID_4_PATH_PREFIX" />
-          <data android:scheme="$DEEPLINK_5_SCHEME" android:host="$DEEPLINK_5_HOST" android:pathPrefix="$ANDROID_5_PATH_PREFIX" />
-        </intent-filter>
-      </config-file>
+		<config-file target="AndroidManifest.xml" parent="/manifest/application/activity">
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<data android:scheme="$URL_SCHEME" />
+			</intent-filter>
+			<intent-filter android:autoVerify="true">
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<data android:scheme="$DEEPLINK_SCHEME" android:host="$DEEPLINK_HOST" android:pathPrefix="$ANDROID_PATH_PREFIX" />
+				<data android:scheme="$DEEPLINK_2_SCHEME" android:host="$DEEPLINK_2_HOST" android:pathPrefix="$ANDROID_2_PATH_PREFIX" />
+				<data android:scheme="$DEEPLINK_3_SCHEME" android:host="$DEEPLINK_3_HOST" android:pathPrefix="$ANDROID_3_PATH_PREFIX" />
+				<data android:scheme="$DEEPLINK_4_SCHEME" android:host="$DEEPLINK_4_HOST" android:pathPrefix="$ANDROID_4_PATH_PREFIX" />
+				<data android:scheme="$DEEPLINK_5_SCHEME" android:host="$DEEPLINK_5_HOST" android:pathPrefix="$ANDROID_5_PATH_PREFIX" />
+			</intent-filter>
+		</config-file>
 
-      <source-file src="src/android/io/ionic/links/IonicDeeplink.java" target-dir="src/io/ionic/deeplink" />
-    </platform>
+		<source-file src="src/android/io/ionic/links/IonicDeeplink.java" target-dir="src/io/ionic/deeplink" />
+	</platform>
 
-    <!-- ios -->
-    <platform name="ios">
-        <js-module src="www/deeplink.js" name="deeplink">
-            <runs/>
-            <clobbers target="IonicDeeplink" />
-        </js-module>
-        <config-file target="config.xml" parent="/*">
-            <feature name="IonicDeeplinkPlugin">
-                <param name="ios-package" value="IonicDeeplinkPlugin" onload="true" />
-            </feature>
-            <preference name="URL_SCHEME" value="$URL_SCHEME" />
-            <preference name="DEEPLINK_SCHEME" value="$DEEPLINK_SCHEME" />
-            <preference name="DEEPLINK_HOST" value="$DEEPLINK_HOST" />
-        </config-file>
+	<!-- ios -->
+	<platform name="ios">
+		<js-module src="www/deeplink.js" name="deeplink">
+			<runs/>
+			<clobbers target="IonicDeeplink" />
+		</js-module>
+		<config-file target="config.xml" parent="/*">
+			<feature name="IonicDeeplinkPlugin">
+				<param name="ios-package" value="IonicDeeplinkPlugin" onload="true" />
+			</feature>
+			<preference name="URL_SCHEME" value="$URL_SCHEME" />
+			<preference name="DEEPLINK_SCHEME" value="$DEEPLINK_SCHEME" />
+			<preference name="DEEPLINK_HOST" value="$DEEPLINK_HOST" />
+		</config-file>
 
-        <config-file target="*-Info.plist" parent="CFBundleURLTypes">
-          <array>
-            <dict>
-              <key>CFBundleURLSchemes</key>
-              <array>
-                <string>$URL_SCHEME</string>
-              </array>
-            </dict>
-          </array>
-        </config-file>
+		<config-file target="*-Info.plist" parent="CFBundleURLTypes">
+			<array>
+				<dict>
+					<key>CFBundleURLSchemes</key>
+					<array>
+						<string>$URL_SCHEME</string>
+					</array>
+				</dict>
+			</array>
+		</config-file>
 
-        <source-file src="src/ios/AppDelegate+IonicDeeplink.m" />
-        <header-file src="src/ios/IonicDeeplinkPlugin.h" />
-        <source-file src="src/ios/IonicDeeplinkPlugin.m" />
-    </platform>
+		<source-file src="src/ios/AppDelegate+IonicDeeplink.m" />
+		<header-file src="src/ios/IonicDeeplinkPlugin.h" />
+		<source-file src="src/ios/IonicDeeplinkPlugin.m" />
+	</platform>
 
-    <platform name="browser">
-      <js-module src="www/deeplink.js" name="deeplink">
-        <runs/>
-        <clobbers target="IonicDeeplink" />
-      </js-module>
-      <js-module src="src/browser/DeeplinkProxy.js" name="IonicDeeplinkProxy">
-        <runs />
-      </js-module>
-    </platform>
+	<platform name="browser">
+		<js-module src="www/deeplink.js" name="deeplink">
+			<runs/>
+			<clobbers target="IonicDeeplink" />
+		</js-module>
+		<js-module src="src/browser/DeeplinkProxy.js" name="IonicDeeplinkProxy">
+			<runs />
+		</js-module>
+	</platform>
 </plugin>
