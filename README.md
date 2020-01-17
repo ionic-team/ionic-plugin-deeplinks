@@ -51,7 +51,7 @@ Using [Ionic Native](https://github.com/ionic-team/ionic-native) (available in 1
 
 ```javascript
 import { Platform, NavController } from 'ionic-angular';
-import { Deeplinks } from '@ionic-native/deeplinks';
+import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 
 export class MyApp {
   constructor(
@@ -84,7 +84,7 @@ If you're using Ionic 2, there is a convenience method to route automatically (s
 
 ```javascript
 import { Platform, NavController } from 'ionic-angular';
-import { Deeplinks } from '@ionic-native/deeplinks';
+import { Deeplinks } from '@ionic-native/deeplinks/ngx';
 
 export class MyApp {
   constructor(
