@@ -1,5 +1,5 @@
 {
-  "name": "ionic-plugin-deeplinks",
+  "name": "@spoonconsulting/ionic-plugin-deeplinks",
   "version": "1.0.0",
   "cordova": {
     "id": "ionic-plugin-deeplinks",
