@@ -1,6 +1,6 @@
 {
   "name": "ionic-plugin-deeplinks",
-  "version": "1.0.21",
+  "version": "1.0.0",
   "cordova": {
     "id": "ionic-plugin-deeplinks",
     "platforms": [
@@ -28,6 +28,6 @@
     "node-version-compare": ">=1.0.1",
     "plist": ">=1.2.0"
   },
-  "author": "Max Lynch <max@ionic.io>",
+  "author": "Max Lynch <max@ionic.io> & forked by Spoon Consulting",
   "license": "MIT"
 }
