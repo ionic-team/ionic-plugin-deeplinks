@@ -62,6 +62,17 @@ public class IonicDeeplink extends CordovaPlugin {
   }
 
   public void handleIntent(Intent intent) {
+
+    Uri referrer = cordova.getActivity().getReferrer();
+    if (referrer != null){
+      if (referrer.getHost().equals("com.salesforce.chatter")) {
+        Intent appIntent = new Intent(Intent.ACTION_VIEW);
+        appIntent.setData(intent.getData());
+        cordova.getActivity().finishAndRemoveTask();
+        cordova.getActivity().startActivity(appIntent);
+        return;
+      }
+    }
     final String intentString = intent.getDataString();
 
     // read intent
