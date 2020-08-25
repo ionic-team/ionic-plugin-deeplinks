@@ -1,6 +1,6 @@
 {
   "name": "@spoonconsulting/ionic-plugin-deeplinks",
-  "version": "1.0.0",
+  "version": "1.0.22",
   "cordova": {
     "id": "ionic-plugin-deeplinks",
     "platforms": [
