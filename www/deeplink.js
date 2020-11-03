@@ -212,7 +212,7 @@ var IonicDeeplink = {
     // 3. Nope so we'll go fragment first if available as that should be what comes after
     if (!isCustomScheme) {
       if (!!data.fragment) {
-        return self._stripFragmentLeadingHash(data.fragment);
+        return this._stripFragmentLeadingHash(data.fragment);
       }
     }
 
@@ -227,7 +227,7 @@ var IonicDeeplink = {
 
     // 5. We'll use fragment next if we're in a custom scheme, though this might need a little more thought
     if (isCustomScheme && !!data.fragment) {
-      return self._stripFragmentLeadingHash(data.fragment);
+      return this._stripFragmentLeadingHash(data.fragment);
     }
 
     // 6. Last resort - no obvious path, fragment or host, so we
