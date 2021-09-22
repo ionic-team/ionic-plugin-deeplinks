@@ -1,6 +1,6 @@
 {
   "name": "ionic-plugin-deeplinks",
-  "version": "1.0.23",
+  "version": "1.0.24",
   "cordova": {
     "id": "ionic-plugin-deeplinks",
     "platforms": [
