@@ -41,7 +41,7 @@ var IonicDeeplink = {
     this.onDeepLink(function (data) {
       var realPath = self._getRealPath(data);
 
-      var args = self._queryToObject(data.queryString);
+      var args = self._queryToObject(data.url);
 
       var matched = false;
       var finalArgs;
