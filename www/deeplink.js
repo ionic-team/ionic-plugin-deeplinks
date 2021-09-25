@@ -28,7 +28,7 @@ var IonicDeeplink = {
    * Default is 800ms which gives the app time to get back and then
    * smoothly animate.
    */
-  NAVIGATION_DELAY: 800,
+  NAVIGATION_DELAY: 400,
 
   canOpenApp: function (app, cb) {
     exec(cb, null, PLUGIN_NAME, 'canOpenApp', []);
