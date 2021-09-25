@@ -100,9 +100,9 @@ var IonicDeeplink = {
       // Defer this to ensure animations run
       setTimeout(function () {
         if (options.root === true) {
-          navController.setRoot(match.$route, match.$args);
+          navController.navigateRoot(match.$route, {queryParams: match.$args});
         } else {
-          navController.push(match.$route, match.$args);
+          navController.navigateForward(match.$route, {queryParams: match.$args});
         }
       }, self.NAVIGATION_DELAY);
 
