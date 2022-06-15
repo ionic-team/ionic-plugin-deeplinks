@@ -39,8 +39,6 @@
 				<param name="onload" value="true" />
 			</feature>
 		</config-file>
-
-
 		<config-file target="AndroidManifest.xml" parent="/manifest/application/activity">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
@@ -52,11 +50,41 @@
 				<action android:name="android.intent.action.VIEW" />
 				<category android:name="android.intent.category.DEFAULT" />
 				<category android:name="android.intent.category.BROWSABLE" />
-				<data android:scheme="$DEEPLINK_SCHEME" android:host="$DEEPLINK_HOST" android:pathPrefix="$ANDROID_PATH_PREFIX" />
-				<data android:scheme="$DEEPLINK_2_SCHEME" android:host="$DEEPLINK_2_HOST" android:pathPrefix="$ANDROID_2_PATH_PREFIX" />
-				<data android:scheme="$DEEPLINK_3_SCHEME" android:host="$DEEPLINK_3_HOST" android:pathPrefix="$ANDROID_3_PATH_PREFIX" />
-				<data android:scheme="$DEEPLINK_4_SCHEME" android:host="$DEEPLINK_4_HOST" android:pathPrefix="$ANDROID_4_PATH_PREFIX" />
-				<data android:scheme="$DEEPLINK_5_SCHEME" android:host="$DEEPLINK_5_HOST" android:pathPrefix="$ANDROID_5_PATH_PREFIX" />
+				<data android:scheme="$DEEPLINK_SCHEME" />
+				<data android:host="$DEEPLINK_HOST" />
+				<data android:pathPrefix="$ANDROID_PATH_PREFIX" />
+			</intent-filter>
+			<intent-filter android:autoVerify="true">
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<data android:scheme="$DEEPLINK_2_SCHEME" />
+				<data android:host="$DEEPLINK_2_HOST" />
+				<data android:pathPrefix="$ANDROID_2_PATH_PREFIX" />
+			</intent-filter>
+			<intent-filter android:autoVerify="true">
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<data android:scheme="$DEEPLINK_3_SCHEME" />
+				<data android:host="$DEEPLINK_3_HOST" />
+				<data android:pathPrefix="$ANDROID_3_PATH_PREFIX" />
+			</intent-filter>
+			<intent-filter android:autoVerify="true">
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<data android:scheme="$DEEPLINK_4_SCHEME" />
+				<data android:host="$DEEPLINK_4_HOST" />
+				<data android:pathPrefix="$ANDROID_4_PATH_PREFIX" />
+			</intent-filter>
+			<intent-filter android:autoVerify="true">
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<data android:scheme="$DEEPLINK_5_SCHEME" />
+				<data android:host="$DEEPLINK_5_HOST" />
+				<data android:pathPrefix="$ANDROID_5_PATH_PREFIX" />
 			</intent-filter>
 		</config-file>
 
